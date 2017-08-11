@@ -23,7 +23,24 @@ You can install all this tools via pip by running:
 It is also recommended that you install the dependencies in a Python Virtual
 Env. The procedure to set up one is very straight forward:
 
-## Install virtualenv
+## Usage with Conda
+In the repository you will find an updated version of the frozen conda environment
+that you can use to set up your own. Just run
+
+    $ conda env create -f env.yaml -n <env_name>
+
+where env_name is the name that you want to give to your environment. The whole
+installation should run automatically, and you should just activate the environment
+
+    $ source activate <env_name>
+
+If you then want to remove the env, just run:
+
+    $ conda env remove -n <env_name>
+
+## Other installation methods
+
+### Install virtualenv
 
     $ pip3 install virtualenv
 
@@ -31,25 +48,25 @@ In case this rises, then try using the packaged version. For example, in Ubuntu:
 
     $ sudo apt install python3-env
 
-## Create a new virtualenv
+### Create a new virtualenv
 
     $ python3 -m venv <envname>
 
-## Activate the environment
+### Activate the environment
 
     $ . <envname>/bin/activate
 
-## Install the requirements
+### Install the requirements
 Provided there is a list with the requirements of this project. You can install
 them using the list and pip:
 
     $ pip3 install -r requirements.txt
 
-## Exit de Environment when done
+### Exit de Environment when done
 
     $ deactivate
 
-## Updating the requirements
+### Updating the requirements
 
 When new requirements are added for the project, or you add custom reqs
 yourself, you can update the project using pip as well and updating the list in
