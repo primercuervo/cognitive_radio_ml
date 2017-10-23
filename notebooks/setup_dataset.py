@@ -91,6 +91,58 @@ def setup_iterables(path):
         data[i] = list(fun.flatten(data_nested[i]))
     return data, labels
 
+def setup_simple_iterables(path):
+    """
+    Sets up the iterables to work with and populates them with the data located
+    at *path*. Works like the "setup iterables" method, but without setting a
+    specific amount of samples, and not setting a nested list
+    """
+    abs_path = os.path.join(c.PRE_PATH, path)
+    # Set a list as place holder for the files that are to be loaded
+    files = [[] for i in range(c.N_SCN)]
+    try:
+        for scenario in range(c.N_SCN):
+            for channel in range(c.N_CHAN):
+                files[scenario].append(sp.fromfile(open(
+                    os.path.join(abs_path, "interframe_time_ch_{}_scn_{}.dat"
+                                 .format(channel+1, scenario))), dtype=sp.float32))
+            files[scenario].append(sp.fromfile(open(
+                os.path.join(abs_path, "packet_rate_scn_{}.dat"
+                             .format(scenario))), dtype=sp.float32))
+            files[scenario].append(sp.fromfile(open(
+                os.path.join(abs_path, "variance_scn_{}.dat"
+                             .format(scenario))), dtype=sp.float32))
+    except IOError as e:
+        print("Error trying to access path: ", e)
+        raise
+
+    # Set a list which will contain the data and another for the labels
+    data = []
+    labels = []
+    # The data list will be populated with the features extracted previously
+    # using GNURadio.
+    # The data that will be contained will have the format:
+    # [ [if_ch_1, if_ch_2, if_ch_3, if_ch_4, packet_rate, variance_in_if],
+    # .
+    # .
+    # .]
+    # being if = interframe delay. For simplicity, the samples will be stored
+    # increasingly depending on the scenario, meaning that first the data for
+    # scn 0 is stored, then for scn 1, and so on. Data will be randomized later
+    # before applying machine learning
+    for scn in range(c.N_SCN): # repeat for each scenario
+        # get how many samples are in the given scenario recording
+        # - It _might_ be safe to say that all files per scenario will have the
+        # same size, so getting the first element per scenario should be fine-
+        num_samp = files[scn][0].shape[0]
+        labels.extend([scn] * num_samp)
+        for sample in range(num_samp):
+            row_add = []
+            for f in files[scn]:
+                row_add.append(f[sample])
+            data.append(row_add)
+    return data, labels
+
 def slice_data(data, labels):
     """
     Takes the dataset and divides it N_SLICES. This is to check the effect that

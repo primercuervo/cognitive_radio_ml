@@ -9,16 +9,20 @@ import os
 import sys
 
 # Set up constants and data
-scn = 3
+scn = 0
 NFFT = 2**6
-count = 200000
-gain_path = 'gain_0_0'
-dir_path = os.path.join('..', '..', 'data', 'ota', gain_path)
+# 5e5 samples for 50ms time window
+count = int(5e5)
+# gain_path = 'gain_0_0'
+snr = 5
+dir_path = os.path.join('..', '..', 'data', 'final_pu', 'with_dc')
 plt.gray()
-train_path = os.path.join(dir_path, 'train')
-test_path = os.path.join(dir_path, 'test')
+train_path = os.path.join(dir_path, '..', '..', 'pic_set', 'SNR_{}'.format(snr), 'train')
+test_path = os.path.join(dir_path, '..', '..', 'pic_set', 'SNR_{}'.format(snr), 'test')
 print("Loading data...")
-data = sp.fromfile(os.path.join(dir_path, 'scn_{}_PU{}.dat'.format(scn, gain_path)), dtype=sp.complex64, count = 500000000)
+# Count = 1.25 e 9 samples for 2500 pictures back to back
+# + 500 samples for overflow avoidance (not expected to use them)
+data = sp.fromfile(os.path.join(dir_path, 'scn_{}_snr_{}'.format(scn, snr)), dtype=sp.complex64, count = (1250000000 + 500) )
 print("Loading DONE")
 
 # Check if the dirs for the images exists. If not, create
@@ -43,15 +47,19 @@ if not os.path.exists(test_scn_path):
     print("Creating directory at ", os.path.realpath(test_scn_path))
     os.makedirs(test_scn_path)
 
-for i in range(2500):
-    fig = plt.figure()
-    data_plot = [data[i] for i in range((2 * count) - 80000, (2 * count) + 80000)]
+for i in range(10000):
+    fig = plt.figure(frameon=False)
+    ax = plt.Axes(fig, [0., 0., 1., 1.,])
+    ax.set_axis_off()
+    fig.add_axes(ax)
+    data_plot = [data[i] for i in range(count - 200000, count + 200000)]
     Pxx, freqs, bins, im = specgram(data_plot, NFFT=NFFT, Fs=10e6,
                                     window=np.blackman(NFFT), noverlap=NFFT-1,
                                     Fc=3.195e9)
-    count += 40000
-    if i < 2000:
-        plt.savefig(os.path.join(train_scn_path, 'image_{}.jpg'.format(i)))
+    count += int(5e5)
+    # ax.imshow(im, aspect='normal')
+    if i < 8000:
+        fig.savefig(os.path.join(train_scn_path, 'image_{}.jpg'.format(i)), dpi = 40)
     else:
-        plt.savefig(os.path.join(test_scn_path, 'image_{}.jpg'.format(i)))
+        fig.savefig(os.path.join(test_scn_path, 'image_{}.jpg'.format(i)))
     plt.close()
