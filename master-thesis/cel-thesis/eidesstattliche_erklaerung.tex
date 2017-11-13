@@ -1,0 +1,60 @@
+\ifx\theThesisLanguage\dictThesisLanguageEnglish
+
+\chapter*{Declaration}
+
+With this statement I declare that I have independently completed the above
+master's thesis. The thoughts taken directly or indirectly from external
+sources are properly marked as such. This thesis was not previously submitted
+to another academic institution and has also not yet been published.
+
+\vspace{2cm}
+\begin{tabbing}
+\hspace{3em}\= \kill
+\>Karlsruhe, \theThesisSignatureDate
+\end{tabbing}
+
+\vspace{2cm}
+\begin{tabbing}
+\hspace{3em}\= \kill
+\>\theThesisAuthor\\[1ex]
+%\>Amalienstra{\ss}e 79\\
+%\>76133 Karlsruhe\\[1ex]
+\end{tabbing}
+
+\else
+
+\chapter*{Erkl{\"a}rung}
+
+%Ich versichere hiermit, dass ich meine Masterarbeit selbständig und unter Beachtung der Satzung der Universität Karlsruhe (TH) zur Sicherung guter wissenschaftlicher Praxis in der aktuellen Fassung angefertigt habe. Ich habe keine anderen als die angegebenen Quellen und Hilfsmittel benutzt und wörtlich oder inhaltlich übernommene Stellen als solche kenntlich gemacht.
+
+Ich versichere hiermit,
+dass ich die vorliegende Arbeit selbst{\"a}ndig
+und unter Beachtung der Satzung des Karlsruher Instituts f\"ur Technologie (KIT)
+zur Sicherung guter wissen\-schaft\-licher Praxis in der aktuellen Fassung angefertigt habe.
+Ich habe keine anderen als die angegebenen Quellen und Hilfsmittel benutzt und w{\"o}rtlich oder inhaltlich {\"u}bernommene Stellen als solche kenntlich gemacht.
+
+\vspace{2cm}
+\begin{tabbing}
+\hspace{3em}\= \kill
+\>Karlsruhe, den \theThesisSignatureDate
+\end{tabbing}
+
+\vspace{2cm}
+\begin{tabbing}
+\hspace{3em}\= \kill
+\>\theThesisAuthor\\[1ex]
+%\>Amalienstra{\ss}e 79\\
+%\>76133 Karlsruhe\\[1ex]
+\end{tabbing}
+
+\fi
+
+\ifx\theThesisCC\dictThesisTRUE
+\newpage
+\begin{center}
+ \includegraphics[width=25mm,valign=c]{cel-thesis/logos/cc-by-nc}
+\end{center}
+
+\vspace{1cm}
+This work is licensed under the Creative Commons Attribution-NonCommercial 4.0 International License. To view a copy of this license, visit http://creativecommons.org/licenses/by-nc/4.0/.
+\fi

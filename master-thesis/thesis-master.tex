@@ -1,0 +1,67 @@
+% Template author: Johannes Demel
+% Document class provides standardized title page + needed extras.
+\documentclass{cel-thesis/cel-thesis}
+\thesisTitle{TBS}
+\thesisType{Master's Thesis}
+\thesisAuthor{Nicolas Cuervo-Benavides}
+\thesisAdvisor{Dr.-Ing. Holger Jäkel}
+\thesisHeadOfInstitute{}
+%\thesisHeadOfInstitute{Dr.-Ing. Holger Jäkel}
+\thesisSupervisor{MSc. Felix Wunsch}
+\thesisStartDate{17th May 2017}
+\thesisEndDate{6th December 2017}
+\thesisSignatureDate{06.12.2017}
+\thesisLanguage{english} % english or ngerman
+\thesisCC{FALSE}
+\thesisPythonWatermark{FALSE}
+
+
+%%% LANGUAGE SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% additional Hyphenation rules
+\hyphenation{non-para-metric repro-gra-mmable}
+% Settings for bibliography
+\usepackage{babelbib}
+\setlanguage % set correct language as selected above
+
+%%% PACKAGES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Add all the packages you feel like you need them.
+% You'll need it.
+% automatically expand/abbreviate terms.
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{todonotes} % great for draft annotations
+
+
+%%% DEFINITIONS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% pretty C++ print.
+\def\CC{{C\nolinebreak[4]\hspace{-.05em}\raisebox{.4ex}{\tiny\textbf{++}}}}
+
+\begin{document}
+\pagenumbering{roman}  % all the preliminaries should be counted roman style
+\maketitle
+%% preliminaries
+  \include{chapters/abstract}		% a MUST, few pages abstract
+
+%% main document
+\cleardoublepage
+\pagenumbering{arabic} % now old school arabic enumerated pages.
+  \tableofcontents 		% a MUST
+  \cleardoublepage		% make sure multipage TOCs are numbered correctly.
+  \include{chapters/introduction}		% include chapter introduction.tex
+  \include{chapters/ml_intro}
+  \include{chapters/implementation}
+  \include{chapters/evaluation}
+  \include{chapters/live}
+%  \include{chapters/systemmodel}		% an example chapter
+  \include{chapters/conclusion}		% everything ends with a summary!
+
+
+%% Appendix
+\appendix
+%  \listoffigures		% if you want, not usual
+%  \listoftables		% if you want, not usual
+  \include{abbreviations}	% use the acronym package. Already include with the template.
+  \bibliography{bibliography}	% include bibliography.bib and with formating etc.
+
+
+\end{document}

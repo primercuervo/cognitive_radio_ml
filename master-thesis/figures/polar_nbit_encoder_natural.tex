@@ -1,0 +1,48 @@
+\usetikzlibrary[topaths, calc]
+
+\begin{tikzpicture}[transform shape]
+% \def\dist{1.5}
+% \def\power{3}
+  \pgfmathparse{\power-1}
+  \newcount\powerleq
+  \let\powerleq\pgfmathresult
+  \pgfmathparse{int(2^\power)}
+  \newcount\blocksize
+  \let\blocksize\pgfmathresult
+  \pgfmathparse{\blocksize-1}
+  \newcount\blockleq
+  \let\blockleq\pgfmathresult
+
+  
+  \foreach \j in {0,...,\powerleq}{
+    \pgfmathparse{int(\j+1)}
+    \let\drow\pgfmathresult
+    
+    \pgfmathparse{int(2^(\j+1))}
+    \let\ccsize\pgfmathresult
+    
+    \pgfmathparse{int(\ccsize/2)}
+    \let\cchalf\pgfmathresult
+    
+    \foreach \i in {0,...,\blockleq}{
+      \pgfmathparse{int(mod(\i,2))}
+      \let\n\pgfmathresult
+      
+      \pgfmathparse{int(\ccsize * int(\i / \ccsize))}
+      \let\dblock\pgfmathresult
+      
+      \pgfmathparse{\dblock + int(mod(\i, \ccsize) / 2) + \cchalf}%(\ccsize * int(\i / \ccsize)) + int(mod(2* (\i + \cchalf), \ccsize)) + 1}
+      \let\dest\pgfmathresult
+      \path (\dist*\j, \i) edge (\dist*\drow, \dest);
+      \ifnum\n=0
+	\path (\dist*\j, \i) edge [dashed] (\dist*\drow, \dest-\cchalf);
+      \fi
+    }
+  }
+   
+  \foreach \i in {0,...,\blockleq}{
+    \node[draw=none] at (-0.3, \blockleq-\i) {$u_{\i}$};
+    \node[draw=none] at (\dist*\power+0.3, \blockleq-\i) {$x_{\i}$};
+  }
+
+\end{tikzpicture}

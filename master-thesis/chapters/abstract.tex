@@ -1,0 +1,47 @@
+\chapter*{Abstract}
+This is an abstract.
+
+CEL thesis rules require it to be about 3-5 pages. \todo{This is a todo example}
+It is a summary of what you do in your thesis.
+Use around 5 pictures and outline whatever you did.
+And now a few lines of information.
+
+
+Polar codes are the first codes to asymptotically achieve channel capacity with low complexity encoders and decoders.
+They were first introduced by Erdal Arikan in 2009 \cite{polar:arikan09}.
+
+Channel coding has always been a challenging task because it draws a lot of resources, especially in software implementations.
+Software Radio is getting more prominent because it offers several advantages among which are higher flexibility and better maintainability.
+Future radio systems are aimed at being run on virtualized servers instead of dedicated hardware in base stations \cite{cloudran:2015}.
+Polar codes may be a promising candidate for future radio systems if they can be implemented efficiently in software.
+
+In this thesis the theory behind polar codes and a polar code implementation in GNU Radio is presented.
+This implementation is then evaluated regarding parameterization options and their impact on error correction performance.
+The evaluation includes a comparison to state-of-the-art \ac{LDPC} codes.
+
+
+\begin{figure}[!htb]
+  \begin{subfigure}[t]{.49\textwidth}
+    \begin{center}
+      \def\dist{1.5}
+      \def\power{3}
+      \input{figures/polar_nbit_encoder_natural}
+      \caption{8 bit polar encoder}
+      \label{abs:polar_8bit_encoder_natural}
+    \end{center}
+  \end{subfigure}\,%
+  \begin{subfigure}[t]{.49\textwidth}
+    \begin{center}
+      \def\dist{1.5}
+      \def\power{3}
+      \input{figures/polar_nbit_decoder}
+      \caption{8 bit polar decoder}
+      \label{abs:polar_8bit_decoder}
+    \end{center}
+  \end{subfigure}%
+  \caption{Polar code encoding and decoding}
+  \label{abs:encoder-decoder}
+\end{figure}
+
+The polar encoder is shown in Fig. \ref{abs:polar_8bit_encoder_natural}.
+

@@ -1,0 +1,54 @@
+\begin{tikzpicture}[node distance = 1.5cm, auto]
+% \def\dist{1.5}
+% \def\power{4}
+   \pgfmathparse{\power-1}
+  \newcount\powerleq
+  \let\powerleq\pgfmathresult
+  \pgfmathparse{int(2^\power)}
+  \newcount\blocksize
+  \let\blocksize\pgfmathresult
+  \pgfmathparse{\blocksize-1}
+  \newcount\blockleq
+  \let\blockleq\pgfmathresult
+  
+  \foreach \j in {0,...,\powerleq}{
+    \pgfmathparse{int(-1*\j-1)}
+    \let\srow\pgfmathresult
+    
+    \pgfmathparse{int(-1*\j)}
+    \let\drow\pgfmathresult
+    
+    \pgfmathparse{int(2^(\j+1))}
+    \let\ccsize\pgfmathresult
+    
+    \pgfmathparse{int(\ccsize/2)}
+    \let\cchalf\pgfmathresult
+    
+    \foreach \i in {0,...,\blockleq}{
+      \pgfmathparse{int(mod(\i,\ccsize))}
+      \let\n\pgfmathresult
+
+      
+      \ifnum\n<\cchalf
+	\path (\dist*\drow, \i) edge [dashed] (\dist*\srow, \i+\n);
+	\path (\dist*\drow, \i) edge [dashed] (\dist*\srow, \i+\n+1);
+      \else
+	\pgfmathparse{int(\ccsize * int(\i / \ccsize)) + int(mod(2* (\i + \cchalf), \ccsize) )}
+	\let\jumpsize\pgfmathresult
+	\path (\dist*\drow, \i) edge (\dist*\srow, \jumpsize);
+	\path (\dist*\drow, \i) edge (\dist*\srow, \jumpsize+1);
+      \fi
+    }
+  }
+
+  
+  \foreach \i in {0,...,\blockleq}{
+    \node[draw=none] at (-0.3-\dist*\power, \blockleq-\i) {$y_{\i}$};
+    \node[draw=none] at (0.3, \blockleq-\i) {$\hat{u}_{\i}$};
+  }
+  
+  \foreach \i in {0,...,\power}{
+    \node[draw=none] at (-1*\dist*\power+\dist*\i, \blocksize-0.5) {$S_{\i}$};
+  }
+
+\end{tikzpicture}

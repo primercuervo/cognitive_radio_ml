@@ -1,0 +1,143 @@
+\acresetall
+% This is an example chapter from 'Polar Codes for Software Radio'. Do not use it but delete it! It serves as an example!
+\chapter{System model}\label{chapter:systemmodel}
+Polar codes are defined for a specific system model.
+The objective of this chapter is to introduce the key concepts.
+Notations are introduced and important terms are revisited in order to refer to them.
+
+\section{Key channel coding concepts}
+The system model used throughout this thesis follows the remarks in \cite{Richardson:2008:MCT} and \cite{polar:arikan09}.
+It is intended to define the domain for which polar codes are developed.
+
+The objective of channel coding is to transmit information from a source to a sink over a point-to-point connection with as few errors as possible.
+A source wants to transmit binary data  $u \in \mathcal{U} = \{0, 1\}$ to a sink where $u$ represents one draw of a binary uniformly distributed random variable.
+The source symbols are encoded, transmitted over a channel and decoded afterwards in order to pass an estimate $\hat{u}$ to a sink.
+
+This thesis uses a common notation for vectors which is introduced here shortly.
+A variable $x$ may assume any value in an alphabet $x \in \mathcal{X}$.
+Multiple variables are combined into a vector $x^N = (x_0, \dots , x_{N-1})$ of size $N$ with its alphabet $x^N \in \mathcal{X}^N$.
+A subvector of $x^N$ is denoted $x_i^j = (x_i, \dots, x_{j-1})$ where $0 \leq i \leq j \leq N$.
+A vector where $i=j$ is an empty vector.
+A vector $x^N$ may be split into even and odd subvectors which are denoted $x_{0,e}^{2n} = (x_0, x_2, \dots, x_{2n-2})$, $x_{0,o}^{2n} = (x_1, x_3, \dots, x_{2n-1})$.
+This numbering convention is in accordance with \cite{dijkstra:zerocounting}, where the author makes a strong point for this exact notation and some papers on polar codes follow it too, e.g. \cite{polar:talvardy:howtoCC}.
+
+
+\subsection{Encoder}
+The encoder takes a frame $u^k$ and maps it to a binary codeword $x^N$, where $k$ and $N$ denote the vector sizes of a frame and a codeword respectively with $k \leq N$.
+An ensemble of all valid codewords for an encoder is a code $\mathcal{C}$.
+It should be noted that $|\mathcal{C}| = |\mathcal{X}^N|$ must hold in order for the code to be able to represent every possible frame.
+
+Not all possible symbols from $\mathcal{X}^N$ are used for transmission.
+The difference between all possible codewords $2^N$ and used codewords $2^k$ is called redundancy.
+With those two values, the code rate is defined as $R = \frac{k}{N}$.
+It is a measure of efficient channel usage.
+
+The encoder is assumed to be linear and to perform a one-to-one mapping of frames to codewords.
+A code is linear if $\alpha x + \alpha' x' \in \mathcal{C}$ for $\forall x, x' \in \mathcal{C}$ and $\forall \alpha, \alpha' \in \mathbb{F}$ hold.
+It should be noted that all operations are done over the Galois field GF(2) or $\mathbb{F} = \{0, 1\}$ if not stated otherwise.
+Then the expression can be simplified to 
+\begin{equation}
+ x + x' \in \mathcal{C} \quad \textrm{for} \quad \forall x, x' \in \mathcal{C}.
+\end{equation}
+A linear combination of two codewords must yield a codeword again.
+
+For linear codes it is possible to find a generator matrix $G \in \mathbb{F}^{k \times N}$ and obtain a codeword from a frame with $x^N = u^k G^{k \times N}$.
+All linear codes can be transformed into systematic form $G = I_k P$.
+$I_k$ is a $k \times k$ dimensional identity matrix.
+If $G$ is systematic, all elements of a frame $u^k$ are also elements of the codeword $x^N$.
+Also, a parity check matrix $H = -P^T I_{N-k}$ with dimensions $(N-k) \times N$ can be calculated from $G$.
+A parity check matrix satisfies $\forall x \in \mathcal{C}: H x^T = 0^T $.
+Thus, a parity check matrix can be used to verify correct codeword reception and furthermore error correction may be performed.
+Error correction with $H$ may be done, e.g. syndrome decoding.
+
+A code can be characterized by the minimum distance between any two codewords.
+In order to obtain this value we use the Hamming distance.
+This distance $d(v^N,x^N)$ equals the number of positions in $v^N$ that differ from $x^N$.
+Minimum distance of a code is than defined by $d(\mathcal{C}) = \min\{d(x,v): x,v \in \mathcal{C}, x \neq v\}$.
+For linear codes this can be simplified to comparing all codewords to the zero codeword $d(\mathcal{C}) = \min\{d(x,0): x \in \mathcal{C}, x \neq 0\}$ which is called Hamming weight.
+
+\subsection{Channel model}\label{sec:channel_model}
+Channel coding relies on a generic channel model.
+Its input is $x \in \mathcal{X}$ and its distorted output is $y \in \mathcal{Y}$.
+A channel is denoted $W: \mathcal{X} \rightarrow \mathcal{Y}$ along with its transition probability $W(y|x), x \in \mathcal{X}, y \in \mathcal{Y}$.
+A \ac{DMC} does not have memory, thus every symbol transmission is independent from any other.
+Combined with a binary input alphabet it is called a \ac{BDMC}.
+For a symmetric channel model, $P(y|1) = P(-y|-1)$ must hold for an output alphabet $y \in \mathcal{Y}, \mathcal{Y} \subset \mathbb{R}$ \cite{Richardson:2008:MCT}.
+Assuming symmetry for a \ac{BDMC} leads to a symmetric \ac{BDMC}.
+In Sec. \ref{theory:channels} several examples of such channels are discussed.
+
+This channel concept may be extended to vector channels.
+A vector channel $W^N$ corresponds to $N$ independent uses of a channel $W$ which is denoted as $W^N : \mathcal{X}^N \rightarrow \mathcal{Y}^N$.
+Also, vector transition probabilities are denoted $W^N(y^N|x^N) = \prod_{i=0}^{N-1} W(y_i|x_i)$.
+
+\subsection{Decoder}
+A decoder receives a possibly erroneous codeword $y$ and checks its validity by asserting $H y^T = 0^T$, thus performing error detection.
+A more sophisticated decoder tries to correct errors by using redundant information transmitted in a codeword.
+An optimal decoder strategy is to maximize the a-posteriori probability.
+Given the probability of each codeword $P(x)$ and the channel transition probability $P(y|x)$, the task at hand is to find the most likely transmitted codeword $x$ under the observation $y$, $P(x|y)$.
+This is denoted
+\begin{equation}
+ \hat{x}^{MAP} = \argmax_{x \in \mathcal{C}} p(x|y) = \argmax_{x \in \mathcal{C}} p(y|x) \frac{p(x)}{p(y)} = \argmax_{x \in \mathcal{C}} p(y|x) p(x)
+\end{equation}
+with Bayes' rule.
+Assume every codeword is transmitted with same probability $P(x^{(i)}) = P(x^{(j)}), \; \forall x^{(i)}, x^{(j)} \in \mathcal{C}$.
+This simplifies the equation and yields a \ac{ML} decoder
+\begin{equation}
+ \hat{x} = \argmax_{x \in \mathcal{C}} p(y|x)
+\end{equation}
+which estimates the most likely codeword to be transmitted given a received possibly erroneous codeword \cite{Richardson:2008:MCT}.
+This decoding principle could be employed in conjunction with the Hamming distance and thus yield $\hat{x} = \argmin_{x \in \mathcal{C}} d(x, y)$.
+In conclusion the task at hand is to find a code which inserts redundancy intelligently, so a decoder can use this information to detect and correct transmission errors.
+
+\subsection{Asymptotically good codes}\label{theory:repetition_code}
+A repetition code is a very simple code which helps clarify certain key concepts in the channel coding domain.
+Assume the encoder and decoder use a repetition code.
+For example a repetition code with $k=1$ and $N = 3$ has two codewords $\mathcal{C} = \{000, 111\}$.
+Thus in this example $R=\frac{1}{3}$.
+We can also obtain its generator and parity check matrices.
+\begin{equation}
+ G = \begin{pmatrix} 1 & 1 & 1 \end{pmatrix},\qquad H = \begin{pmatrix} 1 & 1 & 0 \\ 1 & 0 & 1 \end{pmatrix}
+\end{equation}
+$H$ can be used to detect if a transmission error occurred by verifying if $H x^T = 0^T$.
+In case an error occurred, a \ac{ML} decoder does a majority decision to estimate the most likely codeword.
+
+Repetition codes shed light on a problem common to a lot of codes.
+If reliability of a code needs to be improved, it comes at the expense of a lower code rate.
+Increasing $N$ comes at the expense of decreasing $R = \frac{1}{N}$ because $k=1$ for all repetition codes.
+Thus for a very reliable repetition code $\lim_{N \rightarrow \infty} R$ tends towards $0$.
+
+The above results leads to the definition of asymptotically good codes $\mathcal{C}(N_s, k_s, d_s)$ \cite{Friedrichs:2010:error-control-coding}.
+Two properties must hold for this class of codes,
+\begin{equation}
+ R = \lim_{s \rightarrow \infty} \frac{k_s}{N_s} > 0 \quad \textrm{and} \quad  \lim_{s \rightarrow \infty} \frac{d_s}{N_s} > 0.
+\end{equation}
+The code rate must be $>0$ for all codes which repetition codes do not satisfy.
+And the distance between codewords must grow proportionally to the code block size.
+
+\section{Channels}\label{theory:channels}
+Several common channel models exist to describe the characteristics of a physical transmission.
+Common properties were discussed in Section \ref{sec:channel_model} whereas in this Section the differences are targeted.
+The three most important channel models for polar codes are presented, namely the \ac{BSC}, the \ac{BEC} and the \ac{AWGN} channel.
+
+\subsection{AWGN channel}
+An \ac{AWGN} channel as used in this thesis has a binary input alphabet and a continuous output alphabet $\mathcal{Y} = \mathbb{R}$.
+Each input symbol is affected by Gaussian noise to derive an output symbol.
+Its average corresponds to the input symbol value and the variance can be interpreted as a measure of noise.
+Often the input is \ac{NRZ} encoded which turns a \ac{ML} decision for a symbol into a sign decision.
+
+\subsection{Capacity and reliability}
+Channels are often characterized by two important measures, capacity and reliability.
+These measures are introduced in this Section.
+Channel capacity for symmetric \ac{BDMC} can be calculated by
+\begin{equation}
+ I(W) = \frac{1}{2} \sum_{y \in \mathcal{Y}} \sum_{x \in \mathcal{X}} W(y|x) \log_2 \frac{W(y|x)}{\frac{1}{2} (W(y|0) + W(y|1))}.
+\end{equation}
+It defines the highest rate at which a reliable transmission over a channel $W$ can be conducted while the error probability may still tend towards $0$.
+It is also called the Shannon capacity \cite{sha49} for symmetric channels.
+The Bhattacharyya parameter
+\begin{equation}
+ Z(W) = \sum_{y \in \mathcal{Y}} \sqrt{W(y|0) W(y|1)}
+\end{equation}
+is used to quantify a channel's reliability where a lower value for $Z(W)$ indicates higher reliability.
+It is also referred to as Z-parameter for obvious reasons.
+Also, an upper \ac{ML} decision error bound is given by $Z(W)$ \cite{polar:arikan09}.
