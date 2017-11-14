@@ -245,7 +245,7 @@ def run_knn(X_train, X_test, y_train, y_test, n_neighbors):
             knn_predictions[i].append(knn_list[i][n].predict(X_test[i]))
             knn_pred_times.append(round(time() - t0, 3))
             knn_accs[i].append(accuracy_score(y_test[i], knn_predictions[i][n]))
-    return knn_accs, knn_predictions, knn_pred_times, knn_fit_times
+    return knn_list, knn_accs, knn_predictions, knn_pred_times, knn_fit_times
 
 def run_svc(X_train, X_test, y_train, y_test, complexities):
     """
@@ -271,7 +271,7 @@ def run_svc(X_train, X_test, y_train, y_test, complexities):
             svc_pred[i].append(svc_list[i][n].predict(X_test[i]))
             svc_pred_times.append(round(time() - t0, 3))
             svc_accs[i].append(accuracy_score(y_test[i], svc_pred[i][n]))
-    return svc_accs, svc_pred, svc_pred_times, svc_fit_times
+    return svc_list, svc_accs, svc_pred, svc_pred_times, svc_fit_times
 
 def run_random_forest(X_train, X_test, y_train, y_test, complexities, jobs):
     """
@@ -294,7 +294,7 @@ def run_random_forest(X_train, X_test, y_train, y_test, complexities, jobs):
                 rfc_pred[i].append(rfc_list[i][n].predict(X_test[i]))
                 rfc_pred_times.append(round(time() - t0, 3))
                 rfc_accs[i].append(accuracy_score(y_test[i], rfc_pred[i][n]))
-    return rfc_accs, rfc_pred, rfc_pred_times, rfc_fit_times
+    return rfc_list, rfc_accs, rfc_pred, rfc_pred_times, rfc_fit_times
 
 def run_gaussian(X_train, X_test, y_train, y_test, complexities, jobs):
     """
@@ -321,7 +321,7 @@ def run_gaussian(X_train, X_test, y_train, y_test, complexities, jobs):
                 gpc_pred[i].append(gpc_list[i][n].predict(X_test[i]))
                 gpc_pred_times.append(round(time() - t0, 3))
                 gpc_accs[i].append(accuracy_score(y_test[i], gpc_pred[i][n]))
-    return gpc_accs, gpc_pred, gpc_pred_times, gpc_fit_times
+    return gpc_list, gpc_accs, gpc_pred, gpc_pred_times, gpc_fit_times
 
 def run_decision_tree(X_train, X_test, y_train, y_test, complexities):
     """
@@ -342,7 +342,7 @@ def run_decision_tree(X_train, X_test, y_train, y_test, complexities):
             dtc_pred[i].append(dtc_list[i][n].predict(X_test[i]))
             dtc_pred_times.append(round(time() - t0, 3))
             dtc_accs[i].append(accuracy_score(y_test[i], dtc_pred[i][n]))
-    return dtc_accs, dtc_pred, dtc_pred_times, dtc_fit_times
+    return dtc_list, dtc_accs, dtc_pred, dtc_pred_times, dtc_fit_times
 
 def run_naive_bayes(X_train, X_test, y_train, y_test, complexities):
     """
@@ -363,7 +363,7 @@ def run_naive_bayes(X_train, X_test, y_train, y_test, complexities):
             nbc_pred[i].append(nbc_list[i][n].predict(X_test[i]))
             nbc_pred_times.append(round(time() - t0, 3))
             nbc_accs[i].append(accuracy_score(y_test[i], nbc_pred[i][n]))
-    return nbc_accs, nbc_pred, nbc_pred_times, nbc_fit_times
+    return nbc_list, nbc_accs, nbc_pred, nbc_pred_times, nbc_fit_times
 
 def run_adaboost(X_train, X_test, y_train, y_test, complexities):
     """
@@ -384,7 +384,7 @@ def run_adaboost(X_train, X_test, y_train, y_test, complexities):
             abc_pred[i].append(abc_list[i][n].predict(X_test[i]))
             abc_pred_times.append(round(time() - t0, 3))
             abc_accs[i].append(accuracy_score(y_test[i], abc_pred[i][n]))
-    return abc_accs, abc_pred, abc_pred_times, abc_fit_times
+    return abc_list, abc_accs, abc_pred, abc_pred_times, abc_fit_times
 
 def run_quadratic(X_train, X_test, y_train, y_test, complexities):
     """
@@ -405,7 +405,8 @@ def run_quadratic(X_train, X_test, y_train, y_test, complexities):
             qda_pred[i].append(qda_list[i][n].predict(X_test[i]))
             qda_pred_times.append(round(time() - t0, 3))
             qda_accs[i].append(accuracy_score(y_test[i], qda_pred[i][n]))
-    return qda_accs, qda_pred, qda_pred_times, qda_fit_times
+    return qda_list, qda_accs, qda_pred, qda_pred_times, qda_fit_times
+
 def compute_cm(y_test, predictions, complexities, normalized=False, verbose=False):
     """
     computes and plots the confusion matrices from the predictions
