@@ -225,7 +225,7 @@ def scale_sliced_data(X_train, X_test, scaler):
     for i in range(c.NUM_SLICES):
         X_train_scaled[i] = scaler_.fit_transform(X_train[i])
         X_test_scaled[i] = scaler_.transform(X_test[i])
-    return X_train_scaled, X_test_scaled
+    return scaler_, X_train_scaled, X_test_scaled
 
 def run_knn(X_train, X_test, y_train, y_test, n_neighbors):
     """
@@ -263,7 +263,10 @@ def run_svc(X_train, X_test, y_train, y_test, complexities):
 
     for i in range(c.NUM_SLICES):
         for n in range(len(complexities)):
-            svc_list[i].append(SVC(kernel='rbf', C=float(complexities[n])))
+            svc_list[i].append(SVC(kernel='rbf',
+                                   C=float(complexities[n]),
+                                   probability=True)
+                              )
             t0 = time()
             svc_list[i][n].fit(X_train[i], y_train[i])
             svc_fit_times[i].append(round(time() - t0, 3))
