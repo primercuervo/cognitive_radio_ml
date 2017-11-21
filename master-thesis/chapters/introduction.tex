@@ -1,12 +1,48 @@
 \chapter{Introduction}
 
-Back in 1999, Joseph Mitola III coined the term \emph{Cognitive Radio}\cite{mit99} as a way to enhance the software defined radio capabilities by the means of a dynamic model that, based on human intervention, improved the flexibility of devices by making them fully configurable and capable of adapting to the user needs and react to the changes it the surrounding environment.
+Back in 1999, Joseph Mitola III coined the term \ac{CR}\cite{mitola1999} as a way to enhance the \ac{SDR} capabilities by the means of a dynamic model that, based on human intervention, improved the flexibility of devices by making them fully configurable and capable of adapting to the communication system's needs, suitable to react to the changes it the surrounding environment. A formal definition for the \ac{CR} concept provided at \cite{Haykin2005} encloses the term nicely by describing it as a wireless system that is \emph{intelligent and aware of its surroundings}, whilst being able to learn, adapt and react to changes in the environment, by modifying its operation parameters such as the transmission power, the modulation scheme and its carrier frequency in real-time. Analogously, Jondral \cite{Jondral2005} adopts the short definition for \ac{CR} as "an \ac{SDR} that additionally senses its environment, tracks changes, and possibly reacts upon its findings", becoming an autonomous unit with the potential of using the spectrum efficiently.
+\\
+
+\ac{CR} systems are intended to be immerse in a network, where it interacts with other systems that could be cognitive or non-cognitive radios. According to \cite{Goldsmith}, \ac{CR} is grouped under three paradigms: underlay, overlay and interweave. The \emph{Underlay Paradigm} allows the \ac{CR} system to operate under acceptable levels of interference, determined by an interference threshold. Here, the \ac{CR} is commonly called a \ac{SU}, providing priority to the other systems in the network which it should not significantly interfere, known also as \ac{PU}. In the \emph{Overlay Paradigm}, the cognitive transmitter knows information about the other transmitters in the network, such as their codebooks and modulation schemes. In addition, this model assumes that message that is being transmitted is known by the \ac{CR} when transmission by a non-cognitive system is initiated. This provides the cognitive system with multiple choices on how to use this information: for instance, it can be used to mitigate or completely cancel a possible interference happening in the network during transmission. Additionally, the cognitive system could also retransmit this message to other non-cognitive systems in the network, acting as a relay and, effectively, assist increasing the \ac{SNR} of the non-cognitive system to a level equivalent to the possible decrease due to \ac{CR} transmissions. The \emph{Interweave Paradigm}, or opportunistic communication, identifies temporary space-time-frequency gaps where it can intelligently allocate its transmission, increasing the available resource utilization and minimizing the interference with other active users. Hybrid schemes are also actively being developed \cite{Wu2007} \cite{Kaushik2015} \cite{Wunsch2017a}, where characteristics from different paradigms are combined in order to achieve an effective use of the available communication resources.
+\\
+The main characteristic required to apply any of the aforementioned paradigms is awareness, being it in regard of location, spectrum, time, etc. Awareness is achieved by the means of \emph{the cognition cycle} \cite{mitola1999}, which can be seen in Fig. ~\ref{fig:cognition_cycle}, which enfolds the way the \ac{CR} parses the stimuli from the outside world in order to plan accordingly the proper reactions. This cognition cycle revolves around the following concepts:
+
+\begin{figure}[htb]
+    \centering
+      \includegraphics[width=0.8\textwidth]{figures/cognition_cycle.png}
+      \caption{The cognition Cycle\cite{mitola1999}}
+      \label{fig:cognition_cycle}
+\end{figure}
+
+\begin{itemize}
+    \item Observation: the \ac{CR} receives any signals from the external world, which can contain any type of information that the system can use in its favor and the favor of a better use of its resources.
+    \item Orientation: The \ac{CR} determines the priority from the received signal as well as the type of reaction based on it.
+    \item Planning: results from a normal-level priority, where a plan is generated and the sequence of actions to be taken are established.
+    \item Decision: selects among the plan candidates the best proposal and allocates the necessary resources for its carrying-out.
+    \item Acting: initiates the decided processes.
+    \item learning: is an integration of observations and decisions, based on past and current states that are compared with expectations. When an expectation is met, the system achieves effectiveness. When not, observations are recorded and kept for further learning.
+\end{itemize}
+
+These aspects of \ac{CR} come in handy when trying to solve one of the current major issues of communication systems: Spectrum Scarcity. The access to radio spectrum is highly regulated by government agencies such as the \ac{Ofcom}, the \ac{FCC} and the \ac{ITU}, and its access has been historically granted to the highest bidder on so-called \emph{Spectrum Auctions} \cite{Jondral2005} \cite{Staple2004}. Therefore, the seek of new technologies that allow a more efficient access to the spectrum is paramount. In an effort to find effective solutions for this increasing issue, the \ac{IEEE} created a Standards Committee back in 2005 which, in association with the \ac{ComSoc} and the \ac{EMC} dealt with the generation of standards for dynamic spectrum management. This committee was dissolved between 2007 and 2010 and, after organizational restructuring, the functions of standardization and spectrum management was handed to the \ac{SCC41} - \ac{DySpan} \cite{IEEEDySPAN2015}. As part of this efforts to motivate state-of-art research in this regards, \ac{DySpan} has organized since 2007 the \emph{IEEE International Symposium on Dynamic Spectrum Access Networks} \cite{Comsoc}. Additionally, \ac{DySpan} has embolden the healthy competition since 2015 by introducing the \emph{Spectrum Challenge}, consisting on inviting team worldwide to solve a problem related with dynamic access to the spectrum and 5G implementations. The participating teams are given a set of requirements and limitations, but are encouraged to push this limits with creativity and innovation. The \ac{KIT}, represented by the \ac{CEL}, has taken part in these competitions achieving outstanding results, being awarded with the \emph{Subjective Winner} award on 2015 \cite{Kaushik2015} and the \emph{Best Overall Solution} on 2017 \cite{Wunsch2017a}. This thesis utilizes the setup used at the 2017 spectrum challenge as base testbed. This setup is described as shown in Fig.
+
+
+\begin{figure}[htb]
+    \centering
+      \includegraphics[width=0.8\textwidth]{figures/cognition_cycle.png}
+      \caption{The cognition Cycle\cite{mitola1999}}
+      \label{fig:cognition_cycle}
+\end{figure}
+
+\\
+
+
+Since the  Considering the uprising research in the field of \ac{AI} algorithms, this work focuses on the learning aspect of \ac{CR}. Previous research on this field covers aspects such as modulation recognition \cite{Oshea2016}\cite{Oshea2016d}, resource allocation \cite{Zappone2016}, autoencoding and optimization of MIMO systems \cite{Oshea2017}, dynamic spectrum management \cite{Haykin2005} and context awareness \cite{Paisana2017}\cite{Wunsch2017}. A general overview of the most used algorithms used in academic and industrial fields is presented. General techniques to avoid phenomena such as underfitting and overfitting of the \ac{ML} are introduced.
 Give a short introduction about cognitive radio and overlay systems
 
 description of the problem
 Describe the Dyspan spectrum challenge and its setup
 
-briefly descirbe our particpataion and things done
+briefly descirbe our particpataion and   things done
 
 
  w

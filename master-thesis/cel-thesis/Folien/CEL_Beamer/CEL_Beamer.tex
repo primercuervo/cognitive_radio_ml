@@ -1,0 +1,75 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% LaTeX-Beamer template for KIT design
+%% by Erik Burger, Christian Hammer
+%% title picture by Klaus Krogmann
+%%
+%% version 2.1
+%%
+%% mostly compatible to KIT corporate design v2.0
+%% http://intranet.kit.edu/gestaltungsrichtlinien.php
+%%
+%% Problems, bugs and comments to
+%% burger@kit.edu
+%%
+%%
+%% Modified: 30.1.2013, Schwall
+
+\documentclass[18pt]{beamer}
+
+%% SLIDE FORMAT
+\usepackage{templates_kit/beamerthemekit}
+\usepackage{ngerman}
+
+
+%% german time format (e.g 30.1.2013)
+\usepackage{datetime}
+\newdateformat{germandate}{\THEDAY.\THEMONTH.\THEYEAR}
+\newdateformat{americandate}{\THEMONTH/\THEDAY/\THEYEAR}
+
+% use these packages for PCM symbols and UML classes
+\usepackage{templates_kit/tikzkit}
+\usepackage{templates_kit/tikzuml}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% the presentation starts here
+
+% english vs. ngerman
+\selectlanguage{ngerman}
+
+\title[Signalverarbeitung in der NT: Grundlagen]{Signalverarbeitung in der Nachrichtentechnik:\\ Grundlagen}
+%\subtitle{Something for XYZ 2009}
+\author[H. J\"akel]{Holger J\"akel}
+
+%% insert date in correct format
+\iflanguage{english}{
+	\date{\americandate\today}
+	}{
+	\date{\germandate\today}
+}
+
+\institute{Communications Engineering Lab}
+\date{ }
+
+% Fußnote anpassen, so dass es nicht mit dem Footer überschneidet
+\addtobeamertemplate{footnote}{\vspace{-6pt}\advance\hsize-0.5cm}{\vspace{6pt}}
+\renewcommand*{\footnoterule}{\kern -3pt \hrule width 1in \kern 8.6pt}
+
+% Bibliography
+
+%\usepackage[citestyle=authoryear,bibstyle=numeric,hyperref,backend=biber]{biblatex}
+%\addbibresource{templates/example.bib}
+%\bibhang1em
+
+\begin{document}
+
+
+
+%title page
+\begin{frame}
+\titlepage
+\end{frame}
+
+\input{tex_files/inhalt.tex}
+
+\end{document}	
