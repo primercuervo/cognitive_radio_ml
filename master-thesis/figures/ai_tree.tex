@@ -1,0 +1,38 @@
+\documentclass{standalone}
+
+\usepackage{tikz}
+\begin{document}
+\pagestyle{empty}
+
+\begin{tikzpicture}
+    [edge from parent fork right,
+    grow=right, level 1/.style={sibling distance=2.5em, level distance=6cm},
+                level 2/.style={sibling distance=1.2em}, level distance=3cm]
+    \node [font=\bfseries]{Artificial Intelligence} % root
+      child {node {Vision}
+        child{node {Image Recognition}}
+        child{node {Machine Vision}}
+      }
+      child {node {planning}}
+      child {node {Natural language processing}
+        child{node {content extraction}}
+        child{node {classification}}
+        child{node {machine translation}}
+        child{node {question answering}}
+        child{node {text generation}}
+      }
+      child {node {Expert systems}}
+      child {node {Speech}
+        child{node {Speech to text}}
+        child{node {Text to speech}}
+      }
+      child {node {Robotics}}
+      child {node {machine learning}
+        child{node {deep learning}}
+        child{node {supervised learning}}
+        child{node {unsupervised learning}}
+        child{node {reinforcement learning}}
+      }
+      ;
+\end{tikzpicture}
+\end{document}

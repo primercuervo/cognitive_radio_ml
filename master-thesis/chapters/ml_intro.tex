@@ -1,23 +1,76 @@
 \acresetall
-\chapter{Artificial Intelligence - Introduction}\label{chapter:ml_intro}
+\chapter{Artificial Intelligence}\label{ch:ml_intro}
 
-HERE I PLAN TO DESCRIBE THE THEORY BEHIND THE SCENES THAT HAS BEEN USED FOR THE DEVELOPMENT OF THIS THESIS
+\section{Overview}
+\emph{Intelligence} as a concept has been a topic of exhausting research in fields such as neurology, philosophy, neuroscience, neurobiology, datascience, among others. The Oxford dictionary defines intelligence as \emph{"the ability to acquire and apply knowledge and skills"} \cite{Oxforda}. The first part of this definition applies to what is known as "learning", which is according to the accepted definition of the term as well \cite{Oxford}, and that supports, from the etymology, the importance of the process of learning on intelligence.\\
 
-\section{Overview}\label{ch:ml_overview}
+Jeff Hawkins, a dedicated neuroscientist and author, has approached the subject from the engineering and medical flanks, analysing the structure of the brain and having the perspective of the possibilities of replicating artificially the most sophisticated type of intelligence found on Earth: the human. In his book \emph{On Intelligence} \cite{HawkinsJeff2004}, he captures his findings after inspecting the brain cortex and making a parallel between humans and machines. According to Jeff, \emph{"it is the ability to make predictions about the future that is the crux of intelligence"}, and these predictions are based on the experiences from which the intelligent being has learnt, making decisions that lead it to the best possible known result. In order to create artificially a so-called \emph{intelligent agent}, scientist have put extensive effort first on trying to replicate the known intelligence \cite{Brooks1991}\cite{Reed2007}\cite{Hawkins}, taking the approach of generating a machine that is human-like and that behaves like one, being able to observe its surroundings, learn from stimulus that come from the real world, adapt to changes in those surroundings, plan accordingly to foreseeable process (therefore, make predictions), make decisions and act appropriately. These are the characteristics that Mitola \cite{Mitola1999} described in the cognition cycle for \ac{CR}, which can be applied to any intelligent agent and, consequently, motivate the further research of \ac{AI}.\\
+
+\ac{AI}, however, encircles a variety of disciplines that are in themselves a complete course of research, as it can be seen in Fig~\ref{fig:ai}. This work focuses only in the top branch: machine learning. However, given the slight differences regarding implementation, a separate section will be dedicated solely to deep learning.
+
+\begin{figure}[htb]
+    \centering
+      \includestandalone[width=\textwidth]{figures/ai_tree}
+      \caption{Artificial Intelligence}
+      \label{fig:ai}
+\end{figure}
 
 \section{Machine Learning}
+\ac{ML} encloses the process of taking a data set that represents any phenomena and learning from it. Any type of being that is capable of learning from previous experiences is showing a kind of intelligence, as it interiorizes the stimulus/data and reacts accordingly when it presents itself again. The vast majority of living beings have this capacity, being the humans who have the lead on its effectiveness. Identifying objects, speaking languages, and reacting to any sensorial stimulus is a result of a successful learning process. \\
+
+Generally speaking, learning from data is done when no there is no analytic solution to an encountered situation, but there is enough data to adapt to the it, generating an empirical solution to a problem that cannot be mathematically a-priori described, but that follows a specific pattern\cite{Yaser}. Just as humans do, the idea of machine learning is to generate intelligent agents computationally - teach computers to learn. The idea is as follows: a machine learning algorithm is given a set of data from which it can extract specific information that tells it the specifics about the data. With enough information, the computer is able to make predictions about other data in a different point of time if this data presents the same characteristics.
+
+Although there is no specific mathematic representation of the specific problem to solve, many \ac{ML} algorithms relay heavily on mathematic definitions and optimization theory. Further information regarding \ac{ML} algorithms can be found in section~\ref{ch:ml_algs}. Yet is this versatility provided by the fact of not needing to pin down the specific analytic description of the problem which has impulsed this methodology into several fields of knowledge, being nowadays applied to solve problems such as financial forecasting\cite{Bose2001}, medical diagnosis\cite{Kononenko2001}, entertainment\cite{Bennett2007} and communications systems (such as this thesis), among others. Examples of everyday problems that are suitable for \ac{ML} implementation are:
+
+\begin{itemize}
+    \item Ranking links and clicks for a better web search engine and advertisements.
+    \item Custom user recommendations based on purchases/rents/views.
+    \item Prediction of markets and stock exchange.
+    \item Dating sites with reevaluation of algorithms based on successful matches.
+    \item Financial fraud detection.
+    \item Supply chain optimization
+    \item Biotechnology research acceleration by sequencing and screening of DNA and protein/compound structures.
+    \item National security based on enormous surveillance data.
+\end{itemize}
+
+There are three types of learning: supervised-, unsupervised-, and reinforcement learning. Each of them  has specific characteristics, which are explained in the following subsections.
+\subsection{Supervised Learning}
+Is the type of learning where, in addition to the input dataset, the desired outputs for those given inputs are given to the \ac{ML} algorithm for training. There are two types of supervised learning:
+\begin{itemize}
+    \item \textbf{Classification:} its main goal is to predict a \emph{class label} from a determined set of choices. If the number of choices is two, the model corresponds to a \emph{binary classification}. As it has only two options, it is suitable for problems whose expected answer is of the form "yes/no", "present/not present", "valid/invalid". For a greater number of classes the model corresponds to a \emph{multiclass classification}. Examples of classification are:
+        \begin{itemize}
+            \item Determining whether an email is spam or not constitutes a binary classification problem.
+            \item Identifying the zipcode from handwritten digits on an envelope is a multiclass classification problem.
+            \item Determine whether a tumor is benign based on size and shape data constitutes a binary classification problem
+        \end{itemize}
+    \item \textbf{Regression:} its purpose is to predict a continuous behaviour, such as a trend, or a floating-number, and it is this continuity what sets it apart from the classification models. Examples of regression are:
+        \begin{itemize}
+            \item Predict the value of the stock market
+            \item Determine the expected amount of crops yield from a plantation based on data such as previous yields, weather history, etc.
+        \end{itemize}
+\end{itemize}
+
+\begin{figure}[htb]
+    \centering
+      \includestandalone[width=\textwidth]{figures/knn_accs}
+      \caption{Artificial Intelligence}
+      \label{fig:knn_accs}
+\end{figure}
+
+
+\subsection{Unsupervised Learning}
+\subsection{Reinforcement Learning}
+
 \subsection{Training Models}
 \subsection{Testing Models}
 \subsection{Model Evaluation}
 \subsubsection{Overfitting}
 \subsubsection{Underfitting}
-\subsection{Supervised Learning}
 \subsection{Feature Engineering}
+\subsection{Machine Learning algorithms}\label{ch:ml_algs}
 \subsubsection{K-nearest Neighbors}
 \subsubsection{Support Vector Machines}
 \subsubsection{Binary trees}
-\subsection{Unsupervised Learning}
-\subsection{Reinforcement Learning}
 
 \section{Deep Learning}
 \subsection{Neural Networks}

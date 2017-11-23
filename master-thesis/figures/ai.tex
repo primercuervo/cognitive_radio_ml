@@ -1,0 +1,50 @@
+\documentclass{standalone}
+
+\usepackage{tikz}
+\begin{document}
+\pagestyle{empty}
+
+\begin{tikzpicture}[mindmap,
+    every node/.style={concept, circular drop shadow, execute at begin node=\hskip0pt},
+    root concept/.append style={
+        concept color=black, fill=white, line width=1ex, text=black, font=\large\scshape},
+    concept color=black,
+    text=white,
+    planning/.style={concept color=red},
+    vision/.style={concept color=red!80!white},
+    speech/.style={concept color=green!80!black},
+    machine learning/.style={concept color=cyan!80!blue},
+    expert systems/.style={concept color=orange},
+    natural language/.style={concept color=brown},
+    robotics/.style={concept color=gray},
+    grow cyclic,
+    level 1/.append style={level distance=5cm, sibling angle=53},
+    level 2/.append style={level distance=3cm, sibling angle=45, font=\scriptsize}]
+    \node [root concept] {Artificial \\Intelligence} % root
+      child [planning] {node {planning}}
+      child [vision] {node {Vision}
+        child{node {Image Recognition}}
+        child{node {Machin Vision}}
+      }
+      child [speech] {node {Speech}
+        child{node {Speech to text}}
+        child{node {Text to speech}}
+      }
+      child [machine learning] {node {machine learning}
+        child{node {deep learning}}
+        child{node {supervised learning}}
+        child{node {unsupervised learning}}
+        child{node {reinforcement learning}}
+      }
+      child [expert systems] {node {Expert systems}}
+      child [natural language] {node {Natural language processing}
+        child{node {content extraction}}
+        child{node {classification}}
+        child{node {machine translation}}
+        child{node {question answering}}
+        child{node {text generation}}
+      }
+      child [robotics] {node {Robotics}}
+      ;
+\end{tikzpicture}
+\end{document}
