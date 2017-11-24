@@ -3,18 +3,7 @@
 
 \begin{document}
 \makeatletter
-\pgfplotsset{
-    calculate offset/.code={
-        \pgfkeys{/pgf/fpu=true,/pgf/fpu/output format=fixed}
-        \pgfmathsetmacro\testmacro{(\pgfplotspointmeta *10^\pgfplots@data@scale@trafo@EXPONENT@y)*\pgfplots@y@veclength)}
-        \pgfkeys{/pgf/fpu=false}
-    },
-    every node near coord/.style={
-        /pgfplots/calculate offset,
-        yshift=-\testmacro
-    },
-}
-\pgfplotstableread{
+\pgfplotstableread{ % Taken from the python implementation found in the notebook
 0 92.48 92.90 92.00 87.63
 1 93.30 93.58 92.87 88.69
 2 94.04 94.10 93.49 90.29
@@ -24,26 +13,35 @@
 \begin{axis}[ybar,
         width=15cm,
         height=8cm,
-        %ymin=0,
-        %ymax=100,
-        ylabel={Y-Label},
+        ymin=80,
+        ymax=100,
         xtick=data,
-        xticklabel style={yshift=-8ex},
-        xticklabels={cat2,cat40,cat10,cat50},
+        xticklabels = {
+      	    2,
+            4,
+            10,
+            50
+        },
+	      xlabel={\# of Neighbors},
+	      ylabel={Accuracy \%},
         major x tick style = {opacity=0},
         minor x tick num = 1,
         minor tick length=2ex,
-	ylabel={Accuracy (\%)},
+        nodes near coords,
+        point meta=y,
         every node near coord/.append style={
-                anchor=east,
-                rotate=90
-        }
+                anchor=west,
+                rotate=90,
+        },
+        legend style={at={(0.5,-0.20)},
+            anchor=north,legend columns=-1},
         ]
-\addplot[draw=black,fill=black!20, nodes near coords=Data r] table[x index=0,y index=1] \dataset; %Data1
-\addplot[draw=black,fill=black!40, nodes near coords=Data 2] table[x index=0,y index=2] \dataset; %Data2
-\addplot[draw=black,fill=black!60, nodes near coords=Data 3] table[x index=0,y index=3] \dataset; %Data3
-\addplot[draw=black,fill=black!60, nodes near coords=Data 4] table[x index=0,y index=4] \dataset; %Data3
-
-    \end{axis}
+        \legend{S, M, L, XL},
+\addplot[draw=black,fill=black!20] table[x index=0,y index=1] \dataset; %Data1
+\addplot[draw=black,fill=black!40] table[x index=0,y index=2] \dataset; %Data2
+\addplot[draw=black,fill=black!60] table[x index=0,y index=3] \dataset; %Data3
+\addplot[draw=black,fill=black!80] table[x index=0,y index=4] \dataset; %Data4
+\addplot[draw=black,fill=black]    table[x index=0,y index=4] \dataset; %Data4
+\end{axis}
 \end{tikzpicture}
 \end{document}
