@@ -4,25 +4,26 @@
 \begin{document}
 \makeatletter
 \pgfplotstableread{ % Taken from the python implementation found in the notebook
-0 92.48	93.31	94.05	94.88
-1 92.90	93.59	94.10	95.06
-2 92.01	92.87	93.50	94.70
-3 87.63	88.69	90.29	92.65
+0 46.05	46.28	42.20	42.58
+1 79.78	79.19	81.04	81.05
+2 92.87	92.74	93.57	93.84
+3 94.30	94.55	94.70	95.43
 }\dataset
 \begin{tikzpicture}
 \begin{axis}[ybar,
         width=13cm,
         height=8cm,
-        ymin=80,
+        ymin=40,
         ymax=100,
+        enlarge y limits=0.15,
         xtick=data,
         xticklabels = {
       	    2,
-            4,
+            5,
             10,
             50
         },
-	      xlabel={\# of Neighbors},
+	      xlabel={Tree Depth},
 	      ylabel={Accuracy \%},
         major x tick style = {opacity=0},
         minor x tick num = 1,

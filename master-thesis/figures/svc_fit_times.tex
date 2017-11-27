@@ -4,26 +4,24 @@
 \begin{document}
 \makeatletter
 \pgfplotstableread{ % Taken from the python implementation found in the notebook
-0 92.48	93.31	94.05	94.88
-1 92.90	93.59	94.10	95.06
-2 92.01	92.87	93.50	94.70
-3 87.63	88.69	90.29	92.65
+0 93.656	155.768	385.231	2636.167
+1 104.234	180.072	442.2	2944.628
+2 104.421	176.863	445.557	2455.908
 }\dataset
 \begin{tikzpicture}
 \begin{axis}[ybar,
         width=13cm,
         height=8cm,
-        ymin=80,
-        ymax=100,
+        ymin=0,
+        ymax=3500,
         xtick=data,
         xticklabels = {
-      	    2,
-            4,
-            10,
-            50
+            1,
+            1000,
+            1000000
         },
-	      xlabel={\# of Neighbors},
-	      ylabel={Accuracy \%},
+	      xlabel={RBF Complexity},
+        ylabel={Fit times (s)},
         major x tick style = {opacity=0},
         minor x tick num = 1,
         minor tick length=2ex,

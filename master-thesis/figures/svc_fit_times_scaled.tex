@@ -4,31 +4,37 @@
 \begin{document}
 \makeatletter
 \pgfplotstableread{ % Taken from the python implementation found in the notebook
-0 92.48	93.31	94.05	94.88
-1 92.90	93.59	94.10	95.06
-2 92.01	92.87	93.50	94.70
-3 87.63	88.69	90.29	92.65
+0 67.917	126.023	282.249	1006.269
+1 47.852	85.003	196.066	651.769
+2 589.093	990.484	2331.733	8115.294
 }\dataset
 \begin{tikzpicture}
 \begin{axis}[ybar,
         width=13cm,
         height=8cm,
-        ymin=80,
-        ymax=100,
+        ymin=0,
+        ymax=3500,
         xtick=data,
         xticklabels = {
-      	    2,
-            4,
-            10,
-            50
+            1,
+            1000,
+            1000000
         },
-	      xlabel={\# of Neighbors},
-	      ylabel={Accuracy \%},
+	      xlabel={RBF Complexity},
+        ylabel={Fit times (s)},
         major x tick style = {opacity=0},
         minor x tick num = 1,
         minor tick length=2ex,
         nodes near coords,
         point meta=y,
+        restrict y to domain*=0:3900,
+        after end axis/.code={ % Draw line indicating break
+            \draw [ultra thick, white, decoration={snake, amplitude=1pt}, decorate] (rel axis cs:0,1.05) -- (rel axis cs:1,1.05);
+        },
+        visualization depends on=rawy\as\rawy, % Save the unclipped values
+        nodes near coords={%
+            \pgfmathprintnumber{\rawy}% Print unclipped values
+        },
         every node near coord/.append style={
                 anchor=west,
                 rotate=90,

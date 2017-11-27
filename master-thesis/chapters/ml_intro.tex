@@ -99,18 +99,56 @@ This type of learning has a different approach to the previous two descriptions.
 
 In that same manner, reinforcement learning comes in handy in teaching an intelligent agent how to play a game, where it is presented to a plethora of options (which makes it difficult to be modeled as a supervised learning problem) and has to choose the one that brings it near to victory. The most recent example is AlphaGo \cite{Fu2017}, an intelligent agent capable of winning the world Champion on a Go game. A similar approach has been followed by IBM's with the Deep Blue chess-playing machine \cite{Hsu1999}.
 
-\subsection{Training Models}
+\subsection{Training \& testing  Models}
+Training and testing are concepts that, when applied to learning algorithms, are not far away from the definitions that are used in common language when applied to humans. In general, \emph{training} a leaning model consists of supplying it with enough data from which it can extract information and create generalizations, and testing constist of providing similar data to the model and identify if the generalizations apply. "Generalization" in this context means inferences, decisions or choices that the model makes on data it has never seen before based solely in the data he has learnt from, and clearly the goal of \ac{ML} is to have models that are able to generalize as accurate as possible.
 
-\subsection{Testing Models}
-\subsection{Model Evaluation}
-\subsubsection{Overfitting}
-\subsubsection{Underfitting}
+However, all learning scenarios depend on data, and this data, being as extensive as it can be, does not contain all the information that the data entitles (should the data contain all possible information, learning from it wouldn't provide any profit and would be pointless). Therefore, the question arises: how can it be determined if the model is indeed learning from data?
+
+The way to tackle this problem is separating the data into two: A part from it to be used for training, and the rest of it to be used for validation/testing. Being the training set and testing set generated from the same whole dataset, it is expected that they share enough characteristics for the model to perform well at generalizing. However, there are cases when the model is too complex, and instead of learning to generalize it \emph{memorizes} the training set, and then performs poorly on the training set and on any unknown data. This phenomena is known as \emph{overfitting}, because the model is fit intimately to the training set as is not able to generalize on new data. That being said, one might think that creating the simplest learning model will never end up in overfitting, which is absolutely true. However, in such cases, the model might not be able to even capture the descriptive characteristics of the data, and ends up being incapable of learning from it. This phenomena is known as \emph{underfitting}. Fig~\ref{fig:model_complexity} relates the complexity of the model with its capability of generalizing from new data.
+
+\begin{figure}[!htb]
+    \centering
+      \includegraphics[width=0.6\textwidth]{figures/model_complexity}
+      \caption{Model complexity vs. Training and test accuracy \cite{Andreas}}
+      \label{fig:model_complexity}
+\end{figure}
+
+Therefore, it is clear that the objective model is not too simple or too complex, but somewhere in between; what \cite{Andreas} legitimately calls "the sweet spot", where the model has learnt as much as it can from the provided data, and is still able to create accurate inferences from unknown samples, ergo make predictions.
+
+
+\subsection{Influence of Dataset size in the learning process}\label{ch:size}
+It has been constantly repeated that having data is paramount, but "how much data is required?" is a question that will always be asked, and that, unfortunately, has no concrete answer. The logic answer to it is "use as much data as possible". Data is limited, and generally comes along with the description of the problem itself. What this means is that, in data science, it is common for the learning problem to be stated as "The problem to solve is X, and the data available for it is Y" \cite{Yaser}. Asking for more data is, in most cases, impossible, and the data scientist has to work with what it has. However, the way the scientist extracts information from the data could be the lever that turns a failing model into a successful one.
+
+Moreover, the model complexity is tied to the amount of information that the dataset holds; i.e. if the dataset has considerable variety within, the model can allow itself to grow in complexity without overfitting. This variety usually comes intrinsically with larger datasets, but the clarification has to be made: it is not the size of the dataset what directly yields to variety, meaning that duplicating samples won't help, as repeated data provides no increase on entrophy.
+
 \subsection{Data preprocessing}
+Possibly the data that is measured or handed to solve a problem does not provide much information \emph{as is}. However, after some careful treatment, that data might be transformed in the specific characteristics that allow an accurate generalization. The process of extracting specific \emph{features} that describe the
 The main requirement of \ac{ML} is that data is the main requirement. In the same way, it is necessary to ensure that the data is valid and that information can be extracted from it.
-\subsubsection{Data transformation and scaling}
-\subsection{Feature Engineering}
 
-UNSUPERVISED LEARNING CAN BE USED FOR FEAUTURE EXTRACTION andreas page 154 (PCA)
+One very interesting aspect about data preprocessing is that unsupervised learning can be used to identify features from a dataset. The most common use cases for this are multiclass visualization, dimensionality reduction and generally finding a representation of the data that is is more informative for later processing.
+
+\subsection{Model Evaluation}
+There are multiple ways to evaluate the performance of \ac{ML} algorithms, and they are helpful to figure the model is generalizing from data satisfactorily. In this work we focus on multiclass classification, and one of the most thorough tool for model evaluation is the confusion matrix. When a confusion matrix is calculated for a multiclass classification problem, a square matrix with dimensions equals to the number of classes is generated. Fig~\ref{fig:conf_matrix} shows the confusion matrix configuration for a binary classification, where the classes are "positive" and "negative". Each cell of the matrix contains the number of samples from the testing set that was classified to that specific class. This means that the diagonal of the matrix states the number of correctly classified elements
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{| >{\centering}m{5em}| m{5em} |}
+        \hline
+        \textbf{Scenario} & \multicolumn{1}{|c|}{\textbf{Description}} \\
+        \hline
+        Positive & Fad \\\hline
+        1 & Negative\\\hline
+    \end{tabular}
+    \caption{Scenario description}
+    \label{table:scenarios}
+\end{table}
+
+%\begin{figure}[!htb]
+    %\centering
+      %\includestandalone[width=0.6\textwidth]{figures/conf_matrix}
+      %\caption{Model complexity vs. Training and test accuracy \cite{Andreas}}
+      %\label{fig:model_complexity}
+%\end{figure}
 
 \subsection{Machine Learning algorithms}\label{ch:ml_algs}
 \subsubsection{K-nearest Neighbors}
@@ -120,5 +158,4 @@ UNSUPERVISED LEARNING CAN BE USED FOR FEAUTURE EXTRACTION andreas page 154 (PCA)
 \section{Deep Learning}
 \subsection{Neural Networks}
 \subsection{Convolutional Neural Networks}
-\section{Optimization of Cost Functions}
 

@@ -4,25 +4,23 @@
 \begin{document}
 \makeatletter
 \pgfplotstableread{ % Taken from the python implementation found in the notebook
-0 92.48	93.31	94.05	94.88
-1 92.90	93.59	94.10	95.06
-2 92.01	92.87	93.50	94.70
-3 87.63	88.69	90.29	92.65
+0 79.89	81.13	82.79	85.53
+1 80.94	82.15	83.38	86.14
+2 80.94	82.15	83.33	86.21
 }\dataset
 \begin{tikzpicture}
 \begin{axis}[ybar,
         width=13cm,
         height=8cm,
-        ymin=80,
+        ymin=55,
         ymax=100,
         xtick=data,
         xticklabels = {
-      	    2,
-            4,
-            10,
-            50
+      	    1,
+            1000,
+            1000000,
         },
-	      xlabel={\# of Neighbors},
+	      xlabel={RBF complexity},
 	      ylabel={Accuracy \%},
         major x tick style = {opacity=0},
         minor x tick num = 1,
@@ -35,8 +33,6 @@
         },
         legend style={at={(0.5,-0.20)},
             anchor=north,legend columns=-1},
-        axis lines*=left,
-        clip=false,
         ]
         \legend{S, M, L, XL},
 \addplot[draw=black,fill=blue] table[x index=0,y index=1] \dataset; %Data1

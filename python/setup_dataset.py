@@ -243,7 +243,7 @@ def run_knn(X_train, X_test, y_train, y_test, n_neighbors):
             knn_fit_times[i].append(round(time() - t0, 3))
             t0 = time()
             knn_predictions[i].append(knn_list[i][n].predict(X_test[i]))
-            knn_pred_times.append(round(time() - t0, 3))
+            knn_pred_times[i].append(round(time() - t0, 3))
             knn_accs[i].append(accuracy_score(y_test[i], knn_predictions[i][n]))
     return knn_list, knn_accs, knn_predictions, knn_pred_times, knn_fit_times
 
@@ -272,7 +272,7 @@ def run_svc(X_train, X_test, y_train, y_test, complexities):
             svc_fit_times[i].append(round(time() - t0, 3))
             t0 = time()
             svc_pred[i].append(svc_list[i][n].predict(X_test[i]))
-            svc_pred_times.append(round(time() - t0, 3))
+            svc_pred_times[i].append(round(time() - t0, 3))
             svc_accs[i].append(accuracy_score(y_test[i], svc_pred[i][n]))
     return svc_list, svc_accs, svc_pred, svc_pred_times, svc_fit_times
 
@@ -295,7 +295,7 @@ def run_random_forest(X_train, X_test, y_train, y_test, complexities, jobs):
                 rfc_fit_times[i].append(round(time() - t0, 3))
                 t0 = time()
                 rfc_pred[i].append(rfc_list[i][n].predict(X_test[i]))
-                rfc_pred_times.append(round(time() - t0, 3))
+                rfc_pred_times[i].append(round(time() - t0, 3))
                 rfc_accs[i].append(accuracy_score(y_test[i], rfc_pred[i][n]))
     return rfc_list, rfc_accs, rfc_pred, rfc_pred_times, rfc_fit_times
 
@@ -343,7 +343,7 @@ def run_decision_tree(X_train, X_test, y_train, y_test, complexities):
             dtc_fit_times[i].append(round(time() - t0, 3))
             t0 = time()
             dtc_pred[i].append(dtc_list[i][n].predict(X_test[i]))
-            dtc_pred_times.append(round(time() - t0, 3))
+            dtc_pred_times[i].append(round(time() - t0, 3))
             dtc_accs[i].append(accuracy_score(y_test[i], dtc_pred[i][n]))
     return dtc_list, dtc_accs, dtc_pred, dtc_pred_times, dtc_fit_times
 

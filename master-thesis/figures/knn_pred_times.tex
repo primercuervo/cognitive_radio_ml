@@ -4,17 +4,18 @@
 \begin{document}
 \makeatletter
 \pgfplotstableread{ % Taken from the python implementation found in the notebook
-0 92.48	93.31	94.05	94.88
-1 92.90	93.59	94.10	95.06
-2 92.01	92.87	93.50	94.70
-3 87.63	88.69	90.29	92.65
+0 039	056	095	280
+1 044	065	106	260
+2 054	079	129	347
+3 121	167	280	702
 }\dataset
 \begin{tikzpicture}
 \begin{axis}[ybar,
         width=13cm,
         height=8cm,
-        ymin=80,
-        ymax=100,
+        %ymin=80,
+        ymax=1150,
+        enlarge y limits=0.01,
         xtick=data,
         xticklabels = {
       	    2,
@@ -23,7 +24,7 @@
             50
         },
 	      xlabel={\# of Neighbors},
-	      ylabel={Accuracy \%},
+        ylabel={Predict times (ms)},
         major x tick style = {opacity=0},
         minor x tick num = 1,
         minor tick length=2ex,
