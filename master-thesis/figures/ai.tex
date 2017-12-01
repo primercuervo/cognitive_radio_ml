@@ -1,5 +1,4 @@
 \documentclass{standalone}
-
 \usepackage{tikz}
 \begin{document}
 \pagestyle{empty}
@@ -9,42 +8,42 @@
     root concept/.append style={
         concept color=black, fill=white, line width=1ex, text=black, font=\large\scshape},
     concept color=black,
-    text=white,
-    planning/.style={concept color=red},
-    vision/.style={concept color=red!80!white},
-    speech/.style={concept color=green!80!black},
-    machine learning/.style={concept color=cyan!80!blue},
-    expert systems/.style={concept color=orange},
-    natural language/.style={concept color=brown},
-    robotics/.style={concept color=gray},
+    text=black,
+    planning/.style={concept color=red!10},
+    vision/.style={concept color=cyan!10},
+    speech/.style={concept color=green!10},
+    machine learning/.style={concept color=kit-green70, text=white, faded/.style={concept color=kit-green30}},
+    expert systems/.style={concept color=orange!10},
+    natural language/.style={concept color=brown!10},
+    robotics/.style={concept color=gray!10},
     grow cyclic,
-    level 1/.append style={level distance=5cm, sibling angle=53},
+    level 1/.append style={level distance=4.9cm, sibling angle=53},
     level 2/.append style={level distance=3cm, sibling angle=45, font=\scriptsize}]
     \node [root concept] {Artificial \\Intelligence} % root
-      child [planning] {node {planning}}
-      child [vision] {node {Vision}
+      child [robotics, sibling angle=48, rotate=35] {node {Robotics}}
+      child [planning, rotate=35] {node {planning}}
+      child [vision, rotate=35] {node {Vision}
         child{node {Image Recognition}}
-        child{node {Machin Vision}}
+        child{node {Machine Vision}}
       }
-      child [speech] {node {Speech}
+      child [speech, rotate=35] {node {Speech}
         child{node {Speech to text}}
         child{node {Text to speech}}
       }
-      child [machine learning] {node {machine learning}
+      child [machine learning, rotate=37] {node {\textbf{machine learning}}
         child{node {deep learning}}
         child{node {supervised learning}}
         child{node {unsupervised learning}}
-        child{node {reinforcement learning}}
+        child [faded] {node {reinforcement learning}}
       }
-      child [expert systems] {node {Expert systems}}
-      child [natural language] {node {Natural language processing}
+      child [expert systems, rotate=30] {node {Expert systems}}
+      child [natural language, rotate=35] {node {Natural language processing}
         child{node {content extraction}}
         child{node {classification}}
         child{node {machine translation}}
         child{node {question answering}}
         child{node {text generation}}
       }
-      child [robotics] {node {Robotics}}
       ;
 \end{tikzpicture}
 \end{document}

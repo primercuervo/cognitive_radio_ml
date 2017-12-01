@@ -10,7 +10,7 @@ Jeff Hawkins, a dedicated neuroscientist and author, has approached the subject 
 
 \begin{figure}[htb]
     \centering
-      \includestandalone[width=\textwidth]{figures/ai_tree}
+      \includestandalone[width=\textwidth]{figures/ai}
       \caption{Artificial Intelligence}
       \label{fig:ai}
 \end{figure}
@@ -128,34 +128,112 @@ The main requirement of \ac{ML} is that data is the main requirement. In the sam
 One very interesting aspect about data preprocessing is that unsupervised learning can be used to identify features from a dataset. The most common use cases for this are multiclass visualization, dimensionality reduction and generally finding a representation of the data that is is more informative for later processing.
 
 \subsection{Model Evaluation}
-There are multiple ways to evaluate the performance of \ac{ML} algorithms, and they are helpful to figure the model is generalizing from data satisfactorily. In this work we focus on multiclass classification, and one of the most thorough tool for model evaluation is the confusion matrix. When a confusion matrix is calculated for a multiclass classification problem, a square matrix with dimensions equals to the number of classes is generated. Fig~\ref{fig:conf_matrix} shows the confusion matrix configuration for a binary classification, where the classes are "positive" and "negative". Each cell of the matrix contains the number of samples from the testing set that was classified to that specific class. This means that the diagonal of the matrix states the number of correctly classified elements
+There are multiple ways to evaluate the performance of \ac{ML} algorithms, and they are helpful to figure the model is generalizing from data satisfactorily. In this work we focus on multiclass classification, and one of the most thorough tool for model evaluation is the confusion matrix. When a confusion matrix is calculated for a multiclass classification problem, a square matrix with dimensions equals to the number of classes is generated. Fig~\ref{fig:conf_matrix} shows the confusion matrix configuration for a binary classification, where the classes are "positive" and "negative". Each cell of the matrix contains the number of samples from the testing set that was classified to that specific class. This means that the diagonal of the matrix states the number of correctly classified elements.
 
-\begin{table}[h!]
+\begin{figure}[htb]
     \centering
-    \begin{tabular}{| >{\centering}m{5em}| m{5em} |}
-        \hline
-        \textbf{Scenario} & \multicolumn{1}{|c|}{\textbf{Description}} \\
-        \hline
-        Positive & Fad \\\hline
-        1 & Negative\\\hline
-    \end{tabular}
-    \caption{Scenario description}
-    \label{table:scenarios}
-\end{table}
-
-%\begin{figure}[!htb]
-    %\centering
-      %\includestandalone[width=0.6\textwidth]{figures/conf_matrix}
-      %\caption{Model complexity vs. Training and test accuracy \cite{Andreas}}
-      %\label{fig:model_complexity}
-%\end{figure}
+      \includegraphics[width=0.4\textwidth]{figures/cm}
+      \caption{Confusion Matrix}
+      \label{fig:conf_matrix}
+\end{figure}
 
 \subsection{Machine Learning algorithms}\label{ch:ml_algs}
 \subsubsection{K-nearest Neighbors}
+This is one of the simplest \ac{ML} algorithms, and consists solely on making decisions based on the characteristics of the points that surround the point under test, i.e. the "nearest neighbors". It can be used for both supervised and unsupervised classification as well as for regression. The distance with which the "nearest" point is determined can be any metric measure such as:
+\begin{itemize}
+    \item Euclidian distance between any two points \( \sqrt{\sum (x - y)^2} \)
+    \item Manhattan distance \( \sum {|x - y|} \)
+    \item Chebyshev distance \( max(|x - y|) \)
+    \item Minkowski distance \( \sum(|x - y|^p)^{1/p} \)
+\end{itemize}
+among others.
+
+This algorithm is commonly called \emph{non-generalizing}, because it remembers the location of its training data points and checks the proximity of its points to every other new data to predict. However, even though this procedure seems as "memorizing", this algorithm is not prone to overfitting and can lead to satisfactory results in datasets of various sizes, and because of its easiness to understand and apply, it is a good choice for starting tackling a learning problem before applying more elaborated. On very large datasets, or on datasets of very high dimensionality (several hundreds of classes) the amount of distances calculations escalates, which might lead to long prediction times.
+
+\subsubsection{Decision trees}
+This model is based on simple boolean-like bifurcations (if-then) that build a hiearchy tree that eventually lead to a decision, which makes it an uncomplicated model easy applicable in classification and regression. The concept can be easily explained with an example: assume that we have four common elements that can be found in a lab, such as an external monitor/screen, a laptop, an office chair and a USB stick. The classification of such can be as simple as it is shown in Fig~\ref{fig:dt_example}. In this example, the features are "has a screen?", "has wheels?" and "has a keyboard?". Clearly, this example model can be extended for further classification of lab elements.
+
+\begin{figure}[!htb]
+    \centering
+      \includegraphics[width=0.7\textwidth]{figures/dt_example}
+      \caption{Decision tree for classification of four lab elements}
+      \label{fig:dt_example}
+\end{figure}
+
+The complexity of the model is given by the amount of questions that have to be asked before reaching to a final decision, i.e. the depth of the tree. With a long depth, the questions become more specific, and only few samples are able to fit to the tree, which leads to overfitting. In \ac{ML}, the tree is generated automatically, so a good way to avoid overfitting is stopping the tree from growing more than it should, in a process called \emph{pre-prunning}, or removing branches that provide little to no information after the tree has been created, which is called \emph{post-prunning}.
+
+Given the nature of the decision tree, preprocessing the data (with methods such as scaling) does not influence its performance in terms of accuracy, because each feature is processed completely independent from the others. Because of this reason, this model is recommended when the features do not fail into a common range, or have completely different characteristics (such as a mixture of discontinuous and continuous features).
+
 \subsubsection{Support Vector Machines}
-\subsubsection{Binary trees}
+\ac{SVM} are an extension of the linear models that serve as a base for classification systems, such as the perceptron, which is explained more in detail in secction~\ref{ch:neural}. Basic linear models are not regarded in this work, because they are not explicity used in the implementation described in following chapters, and the specifics of the mathematic description for the linear models and \ac{SVM} models is extensive and out of the scope of this thesis. Prof. Yaser provides an extensive explanation on perceptrons and on its used for the learning process \cite{Yaser}. In summary, a linear model sets a classification boundary that separates different classes. \ac{SVM} extends this functionality by introducing the concept of \emph{hyper-planes}, which ensures the an improved classification by maximizing the separation of points of different classes by the means of the hyperplanes. This classification boundaries are shown in Fig~\ref{fig:svm} for two different classes.
+
+\begin{figure}[!htb]
+    \centering
+      \includegraphics[width=0.7\textwidth]{figures/svm}
+      \caption{\ac{SVM} - Hyperplanes separating two classes. Functional margin in red}
+      \label{fig:dt_example}
+\end{figure}
+The hyperplanes that generate the largest separation between training datapoints of different classes conform a so-called \emph{functional margin}, which provides the smallest generalization error of the classifier. This models are said to have exceptionally good performance in high dimensional spaces, even when the number of classes is greater than the number of available samples \cite{SKLEARN}.
 
 \section{Deep Learning}
-\subsection{Neural Networks}
+Additionally to the approach of learning from extracted features, deep learning is an approach based on learning data representations. This is a subgroup of \ac{ML}, and was developed on top of an technique called Neural Networks, which is described briefly below. The term "Deep learning" was coined in 1986 by Rina Dechter \cite{Dechter}, in a proposed work to overcome a way to learn the maximum amount of information from techniques using backpropagation, making a parallel of learning and recording, and so when a so-called dead end is encountered, the recorded information could guide iteratively to make new decisions.
+
+\subsection{Neural Networks}\label{ch:neural}
+Before getting deeper into the specifics of neural networks, it is precise to first define one small unit that is used to build the networks: the perceptron. A perceptron is a node that implements a very simple binomial linear classification. It maps the output based on an activation function applied to the input:
+
+\begin{equation}
+    f(x) =
+    \begin{cases}
+        1 \text{ if } w*x + b > 0\\
+        0 \text{ otherwise}
+    \end{cases}
+\end{equation}
+
+It can clearly be seen that the output of the perceptron is based on a linear equation of the form \(y=mx+b\), where \(w\)  is a vector of weights, \(x\) is the input of the perceptron, and \(b\) is the bias. The weights set certain restrictions to the input data, and the bias determinates the decision threshold for a binary classification. Assuming that values higher than the threshold are set to a positive decision, and below the threshold to a negative decision, the mathematic representation is set as:
+
+\begin{equation}
+    \text{positive decision if } \sum_{i=1}^{d} w_i\cdot x_i > \text{bias}
+\end{equation}
+\begin{equation}
+    \text{negative decision if } \sum_{i=1}^{d} w_i\cdot x_i < \text{bias}
+\end{equation}
+
+which can be represented in the following simplified form:
+\begin{equation}
+    \text{decision } h(x) = \text{sign}\left(  \left( \sum_{i=1}^{d} w_i\cdot x_i \right )+ b \right )
+\end{equation}
+
+A basic representation of a perceptron is shown in Fig~\ref{fig:perceptron}.
+
+\begin{figure}[!htb]
+    \centering
+      \includegraphics[width=0.4\textwidth]{figures/perceptron}
+      \caption{Interconection of perceptrons generating a simple neural network}
+      \label{fig:perceptron}
+\end{figure}
+
+Perceptrons are also called \emph{neurons}, which are activated to specific types of input data. When more neurons are interconnected, each one with a different activation function (based on the weights and the bias), a neural network is created, which can then classify input data of higher complexity. An arbitrary amount of neurons can be added increasing as well the complexity of the network, but each of them classifies the data independently. Historically, the name \emph{neural network} is given because of the similarity to this behavior to the synapsis of the neurons in a biological neural system. The book of professor Yaser \cite{Yaser} explains in further detail the perceptrons and the learning process using these units.
+
+\begin{figure}[!htb]
+    \centering
+      \includegraphics[width=0.8\textwidth]{figures/neuralnetwork}
+      \caption{Simple binary classification using a perceptron on fully separable data}
+      \label{fig:neuralnetwork}
+\end{figure}
+
 \subsection{Convolutional Neural Networks}
+
+Convolutional Neural Networks \ac{ConvNet} are a special type of neural networks that share their parameters accross space, making them suitable for image classification. The main idea is as follows: assume we have an image depicted in blue in Fig~\ref{fig:convolutionalnetwork} as the input of this system, whose dimensions are (height, width and depth). The height and width are the amount of pixels that determine the size of the picture, and the depth is 3 for color pictures (RGB) and 1 for grayscale. When this picture is inserted into the \ac{ConvNet}, only a portion of it is regarded into a so called patch, shown in red.
+
+\begin{figure}[!t]
+    \centering
+      \includegraphics[width=\textwidth]{figures/convolutionalnetwork}
+      \caption{Convolutional Network}
+      \label{fig:convolutionalnetwork}
+\end{figure}
+
+This patch, also called kernel, is then swept along the picture with a given arbitrary stepsize, applying a neural network operation over it. As it is a smaller patch, each operation regards many fewer weights in comparison with the whole input, which are shared accross space with the slide operation. As a result, a stack of convolutions is generated, representing a picture-like, having not only a reduced heigh and width, but an increased depth K that represents the no-linearities that describe the input, as if it increased the amount of color channels that describe the input picture.
+
+Generally, this convolutional layers are stacked together generating a piramid, in a so-called sequential model, reducing the spacial dimentions of an input image (h,w), but increasing its depth. As a result, the depth corresponds to the \emph{semantic complexity} of the image representation, maping the illustrative content of it. Inside of each layer, there is a number K of filters, in charge of picking different characteristics from the image, such as an specific shape or a determinate intensity value. The characteristic that the filter notices is not programmed, but learned by itself. This means that the network learns on its own what type of feature representation is going to learn and, consequently, which shape is going to activate it.
+
 

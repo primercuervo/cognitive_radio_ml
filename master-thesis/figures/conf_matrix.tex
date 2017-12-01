@@ -1,0 +1,21 @@
+\documentclass[tikz, border=2mm]{standalone}
+\usepackage{tikz}
+\usetikzlibrary{fit}
+
+\begin{document}
+\begin{tikzpicture}
+    [
+        matrix node/.style={draw, align=left, text width=7.5em}
+    ]
+
+    \node (rect) [matrix] {positive};
+    \node (rect2) [matrix, right=1.4cm of rect.east, anchor=west] {negative};
+%\node[draw, fit={(0,0) (2,2)}, xshift=2cm, inner sep=0pt, label=center:Test] (B) {};
+%\node[draw, fit={(2,2) (2,2)}, xshift=2cm, inner sep=0pt, label=center:Test] (C) {};
+
+%\begin{scope}[yshift=2cm]
+%\draw (0,0) rectangle node[draw] (A) {Test} ++(2,2);
+%\draw (2,0) rectangle node[draw] (B) {Test} ++(2,2);
+%\end{scope}
+\end{tikzpicture}
+\end{document}

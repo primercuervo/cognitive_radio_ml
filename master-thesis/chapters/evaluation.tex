@@ -27,134 +27,481 @@ Moreover, it is also interesting to determine how the models behave when the fea
 
 \begin{figure}[!htb]
     \centering
-    \begin{subfigure}[htb]{0.49\textwidth}
+    \begin{subfigure}[t]{0.49\textwidth}
         \centering
-        \includestandalone[width=\linewidth]{figures/knn_accs}
-        \label{fig:knn_accs}
+        \begin{tikzpicture}[scale=0.8]
+            \begin{axis}[
+                xlabel={\# of Neighbors},
+                ylabel={Accuracy},
+                legend style={at={(1.2,1.20)},
+                    anchor=north,legend columns=-1},
+                  ]
+                \addplot[color=blue] table [x=N, y=S, col sep=comma, mark=none] {data/knn_accs.csv};
+                \addplot[color=red] table [x=N, y=M, col sep=comma, mark=none] {data/knn_accs.csv};
+                \addplot[color=green] table [x=N, y=L, col sep=comma, mark=none] {data/knn_accs.csv};
+                \addplot[color=orange] table [x=N, y=XL, col sep=comma, mark=none] {data/knn_accs.csv};
+                \legend{Dataset S, Dataset M, Dataset L, Dataset XL}
+        \end{axis}
+        \end{tikzpicture}
+        \caption{Accuracy with unscaled features}
+        \label{fig:knn_accs_scaled}
     \end{subfigure}
-    \begin{subfigure}[htb]{0.49\textwidth}
+        \hfill
+    \begin{subfigure}[t]{0.49\textwidth}
         \centering
-        \includestandalone[width=\linewidth]{figures/knn_accs_scaled}
+        \begin{tikzpicture}[scale=0.8]
+            \begin{axis}[
+                xlabel={\# of Neighbors},
+                ylabel={Accuracy},
+                  ]
+                \addplot[color=blue] table [x=N, y=S, col sep=comma, mark=none] {data/knn_accs_scaled.csv};
+                \addplot[color=red] table [x=N, y=M, col sep=comma, mark=none] {data/knn_accs_scaled.csv};
+                \addplot[color=green] table [x=N, y=L, col sep=comma, mark=none] {data/knn_accs_scaled.csv};
+                \addplot[color=orange] table [x=N, y=XL, col sep=comma, mark=none] {data/knn_accs_scaled.csv};
+                \legend{Dataset S, Dataset M, Dataset L, Dataset XL}
+        \end{axis}
+        \end{tikzpicture}
         \caption{Accuracy with scaled features}
         \label{fig:knn_accs_scaled}
-    \end{subfigure}\\
-    \begin{subfigure}[htb]{0.49\textwidth}
+    \end{subfigure}
+    \begin{subfigure}[t]{0.49\textwidth}
         \centering
-        \includestandalone[width=\linewidth]{figures/knn_fit_times}
+        \begin{tikzpicture}[scale=0.8]
+            \begin{axis}[
+                xlabel={\# of Neighbors},
+                ylabel={Training time (s)},
+                  ]
+                \addplot[color=blue]table [x=N, y=S, col sep=comma, mark=none] {data/knn_fit_times.csv};
+                \addplot[color=red] table [x=N, y=M, col sep=comma, mark=none] {data/knn_fit_times.csv};
+                \addplot[color=green] table [x=N, y=L, col sep=comma, mark=none] {data/knn_fit_times.csv};
+                \addplot[color=orange] table [x=N, y=XL, col sep=comma, mark=none] {data/knn_fit_times.csv};
+        \end{axis}
+        \end{tikzpicture}
         \caption{Training times with unscaled features}
         \label{fig:knn_fit_times}
     \end{subfigure}
-    \begin{subfigure}[htb]{0.49\textwidth}
+    \centering
+        \hfill
+    \begin{subfigure}[t]{0.49\textwidth}
         \centering
-        \includestandalone[width=\linewidth]{figures/knn_fit_times_scaled}
+        \begin{tikzpicture}[scale=0.8]
+            \begin{axis}[
+                xlabel={\# of Neighbors},
+                ylabel={Training time (s)},
+                  ]
+                \addplot[color=blue]table [x=N, y=S, col sep=comma, mark=none] {data/knn_fit_times_scaled.csv};
+                \addplot[color=red] table [x=N, y=M, col sep=comma, mark=none] {data/knn_fit_times_scaled.csv};
+                \addplot[color=green] table [x=N, y=L, col sep=comma, mark=none] {data/knn_fit_times_scaled.csv};
+                \addplot[color=orange] table [x=N, y=XL, col sep=comma, mark=none] {data/knn_fit_times_scaled.csv};
+        \end{axis}
+        \end{tikzpicture}
         \caption{Training times with scaled features}
         \label{fig:knn_fit_times_scaled}
-    \end{subfigure}\\
-    \begin{subfigure}[htb]{0.49\textwidth}
+    \end{subfigure}
+    \begin{subfigure}[t]{0.49\textwidth}
         \centering
-        \includestandalone[width=\linewidth]{figures/knn_pred_times}
+        \begin{tikzpicture}[scale=0.8]
+            \begin{axis}[
+                xlabel={\# of Neighbors},
+                ylabel={Prediction time (s)},
+                  ]
+                \addplot[color=blue]table [x=N, y=S, col sep=comma, mark=none] {data/knn_pred_times.csv};
+                \addplot[color=red] table [x=N, y=M, col sep=comma, mark=none] {data/knn_pred_times.csv};
+                \addplot[color=green] table [x=N, y=L, col sep=comma, mark=none] {data/knn_pred_times.csv};
+                \addplot[color=orange] table [x=N, y=XL, col sep=comma, mark=none] {data/knn_pred_times.csv};
+        \end{axis}
+        \end{tikzpicture}
         \caption{Prediction times with unscaled features}
         \label{fig:knn_pred_times}
     \end{subfigure}
-    \begin{subfigure}[htb]{0.49\textwidth}
+    \centering
+        \hfill
+    \begin{subfigure}[t]{0.49\textwidth}
         \centering
-        \includestandalone[width=\linewidth]{figures/knn_pred_times_scaled}
+        \begin{tikzpicture}[scale=0.8]
+            \begin{axis}[
+                xlabel={\# of Neighbors},
+                ylabel={Prediction time (s)},
+                  ]
+                \addplot[color=blue]table [x=N, y=S, col sep=comma, mark=none] {data/knn_pred_times_scaled.csv};
+                \addplot[color=red] table [x=N, y=M, col sep=comma, mark=none] {data/knn_pred_times_scaled.csv};
+                \addplot[color=green] table [x=N, y=L, col sep=comma, mark=none] {data/knn_pred_times_scaled.csv};
+                \addplot[color=orange] table [x=N, y=XL, col sep=comma, mark=none] {data/knn_pred_times_scaled.csv};
+        \end{axis}
+        \end{tikzpicture}
         \caption{Prediction times with scaled features}
-        \label{fig:knn_pred_times_scaled}
+        \label{fig:knn_pred_times}
     \end{subfigure}
-    \caption{K-nearest Neighbors}
-    \label{fig:knn}
+    \caption{Metrics for KNN}
+    \label{fig:knn_bla}
 \end{figure}
 
 \begin{figure}[!htb]
     \centering
-    \begin{subfigure}[htb]{0.49\textwidth}
+    \begin{subfigure}[t]{0.49\textwidth}
         \centering
-        \includestandalone[width=\linewidth]{figures/dtc_accs}
+        \begin{tikzpicture}[scale=0.8]
+            \begin{axis}[
+                xlabel={\# of Neighbors},
+                ylabel={Accuracy},
+                legend style={at={(1.2,1.20)},
+                    anchor=north,legend columns=-1},
+                  ]
+                \addplot[color=blue] table [x=N, y=S, col sep=comma, mark=none] {data/dtc_accs.csv};
+                \addplot[color=red] table [x=N, y=M, col sep=comma, mark=none] {data/dtc_accs.csv};
+                \addplot[color=green] table [x=N, y=L, col sep=comma, mark=none] {data/dtc_accs.csv};
+                \addplot[color=orange] table [x=N, y=XL, col sep=comma, mark=none] {data/dtc_accs.csv};
+                \legend{Dataset S, Dataset M, Dataset L, Dataset XL}
+        \end{axis}
+        \end{tikzpicture}
         \caption{Accuracy with unscaled features}
-        \label{fig:dtc_accs}
+        \label{fig:dtc_accs_scaled}
     \end{subfigure}
-    \begin{subfigure}[htb]{0.49\textwidth}
+        \hfill
+    \begin{subfigure}[t]{0.49\textwidth}
         \centering
-        \includestandalone[width=\linewidth]{figures/dtc_accs_scaled}
+        \begin{tikzpicture}[scale=0.8]
+            \begin{axis}[
+                xlabel={\# of Neighbors},
+                ylabel={Accuracy},
+                  ]
+                \addplot[color=blue] table [x=N, y=S, col sep=comma, mark=none] {data/dtc_accs_scaled.csv};
+                \addplot[color=red] table [x=N, y=M, col sep=comma, mark=none] {data/dtc_accs_scaled.csv};
+                \addplot[color=green] table [x=N, y=L, col sep=comma, mark=none] {data/dtc_accs_scaled.csv};
+                \addplot[color=orange] table [x=N, y=XL, col sep=comma, mark=none] {data/dtc_accs_scaled.csv};
+                \legend{Dataset S, Dataset M, Dataset L, Dataset XL}
+        \end{axis}
+        \end{tikzpicture}
         \caption{Accuracy with scaled features}
         \label{fig:dtc_accs_scaled}
     \end{subfigure}
-    \begin{subfigure}[htb]{0.49\textwidth}
+    \begin{subfigure}[t]{0.49\textwidth}
         \centering
-        \includestandalone[width=\linewidth]{figures/dtc_fit_times}
+        \begin{tikzpicture}[scale=0.8]
+            \begin{axis}[
+                xlabel={\# of Neighbors},
+                ylabel={Training time (s)},
+                  ]
+                \addplot[color=blue]table [x=N, y=S, col sep=comma, mark=none] {data/dtc_fit_times.csv};
+                \addplot[color=red] table [x=N, y=M, col sep=comma, mark=none] {data/dtc_fit_times.csv};
+                \addplot[color=green] table [x=N, y=L, col sep=comma, mark=none] {data/dtc_fit_times.csv};
+                \addplot[color=orange] table [x=N, y=XL, col sep=comma, mark=none] {data/dtc_fit_times.csv};
+        \end{axis}
+        \end{tikzpicture}
         \caption{Training times with unscaled features}
         \label{fig:dtc_fit_times}
     \end{subfigure}
-    \begin{subfigure}[htb]{0.49\textwidth}
+    \centering
+        \hfill
+    \begin{subfigure}[t]{0.49\textwidth}
         \centering
-        \includestandalone[width=\linewidth]{figures/dtc_fit_times_scaled}
+        \begin{tikzpicture}[scale=0.8]
+            \begin{axis}[
+                xlabel={\# of Neighbors},
+                ylabel={Training time (s)},
+                  ]
+                \addplot[color=blue]table [x=N, y=S, col sep=comma, mark=none] {data/dtc_fit_times_scaled.csv};
+                \addplot[color=red] table [x=N, y=M, col sep=comma, mark=none] {data/dtc_fit_times_scaled.csv};
+                \addplot[color=green] table [x=N, y=L, col sep=comma, mark=none] {data/dtc_fit_times_scaled.csv};
+                \addplot[color=orange] table [x=N, y=XL, col sep=comma, mark=none] {data/dtc_fit_times_scaled.csv};
+        \end{axis}
+        \end{tikzpicture}
         \caption{Training times with scaled features}
         \label{fig:dtc_fit_times_scaled}
     \end{subfigure}
-    \begin{subfigure}[htb]{0.49\textwidth}
+    \begin{subfigure}[t]{0.49\textwidth}
         \centering
-        \includestandalone[width=\linewidth]{figures/dtc_pred_times}
+        \begin{tikzpicture}[scale=0.8]
+            \begin{axis}[
+                xlabel={\# of Neighbors},
+                ylabel={Prediction time (s)},
+                  ]
+                \addplot[color=blue]table [x=N, y=S, col sep=comma, mark=none] {data/dtc_pred_times.csv};
+                \addplot[color=red] table [x=N, y=M, col sep=comma, mark=none] {data/dtc_pred_times.csv};
+                \addplot[color=green] table [x=N, y=L, col sep=comma, mark=none] {data/dtc_pred_times.csv};
+                \addplot[color=orange] table [x=N, y=XL, col sep=comma, mark=none] {data/dtc_pred_times.csv};
+        \end{axis}
+        \end{tikzpicture}
         \caption{Prediction times with unscaled features}
         \label{fig:dtc_pred_times}
     \end{subfigure}
-    \begin{subfigure}[htb]{0.49\textwidth}
+    \centering
+        \hfill
+    \begin{subfigure}[t]{0.49\textwidth}
         \centering
-        \includestandalone[width=\linewidth]{figures/dtc_pred_times_scaled}
+        \begin{tikzpicture}[scale=0.8]
+            \begin{axis}[
+                xlabel={\# of Neighbors},
+                ylabel={Prediction time (s)},
+                  ]
+                \addplot[color=blue]table [x=N, y=S, col sep=comma, mark=none] {data/dtc_pred_times_scaled.csv};
+                \addplot[color=red] table [x=N, y=M, col sep=comma, mark=none] {data/dtc_pred_times_scaled.csv};
+                \addplot[color=green] table [x=N, y=L, col sep=comma, mark=none] {data/dtc_pred_times_scaled.csv};
+                \addplot[color=orange] table [x=N, y=XL, col sep=comma, mark=none] {data/dtc_pred_times_scaled.csv};
+        \end{axis}
+        \end{tikzpicture}
         \caption{Prediction times with scaled features}
-        \label{fig:dtc_pred_times_scaled}
+        \label{fig:dtc_pred_times}
     \end{subfigure}
-    \caption{Decision Trees}
-    \label{fig:dtc}
+    \caption{Metrics for dtc}
+    \label{fig:dtc_bla}
 \end{figure}
 
-\begin{figure}
+
+
+\begin{figure}[!htb]
     \centering
-    \begin{subfigure}[htb]{0.49\textwidth}
+    \begin{subfigure}[t]{0.49\textwidth}
         \centering
-        \includestandalone[width=\linewidth]{figures/svc_accs}
+        \begin{tikzpicture}[scale=0.8]
+            \begin{axis}[
+                xlabel={\# of Neighbors},
+                ylabel={Accuracy},
+                legend style={at={(1.2,1.20)},
+                    anchor=north,legend columns=-1},
+                  ]
+                \addplot[color=blue] table [x=N, y=S, col sep=comma, mark=none] {data/svc_accs.csv};
+                \addplot[color=red] table [x=N, y=M, col sep=comma, mark=none] {data/svc_accs.csv};
+                \addplot[color=green] table [x=N, y=L, col sep=comma, mark=none] {data/svc_accs.csv};
+                \addplot[color=orange] table [x=N, y=XL, col sep=comma, mark=none] {data/svc_accs.csv};
+                \legend{Dataset S, Dataset M, Dataset L, Dataset XL}
+        \end{axis}
+        \end{tikzpicture}
         \caption{Accuracy with unscaled features}
-        \label{fig:svc_accs}
+        \label{fig:svc_accs_scaled}
     \end{subfigure}
-    \begin{subfigure}[htb]{0.49\textwidth}
+        \hfill
+    \begin{subfigure}[t]{0.49\textwidth}
         \centering
-        \includestandalone[width=\linewidth]{figures/svc_accs_scaled}
+        \begin{tikzpicture}[scale=0.8]
+            \begin{axis}[
+                xlabel={\# of Neighbors},
+                ylabel={Accuracy},
+                  ]
+                \addplot[color=blue] table [x=N, y=S, col sep=comma, mark=none] {data/svc_accs_scaled.csv};
+                \addplot[color=red] table [x=N, y=M, col sep=comma, mark=none] {data/svc_accs_scaled.csv};
+                \addplot[color=green] table [x=N, y=L, col sep=comma, mark=none] {data/svc_accs_scaled.csv};
+                \addplot[color=orange] table [x=N, y=XL, col sep=comma, mark=none] {data/svc_accs_scaled.csv};
+                \legend{Dataset S, Dataset M, Dataset L, Dataset XL}
+        \end{axis}
+        \end{tikzpicture}
         \caption{Accuracy with scaled features}
         \label{fig:svc_accs_scaled}
     \end{subfigure}
-    \begin{subfigure}[b]{0.49\textwidth}
+    \begin{subfigure}[t]{0.49\textwidth}
         \centering
-        \includestandalone[width=\linewidth]{figures/svc_fit_times}
+        \begin{tikzpicture}[scale=0.8]
+            \begin{axis}[
+                xlabel={\# of Neighbors},
+                ylabel={Training time (s)},
+                  ]
+                \addplot[color=blue]table [x=N, y=S, col sep=comma, mark=none] {data/svc_fit_times.csv};
+                \addplot[color=red] table [x=N, y=M, col sep=comma, mark=none] {data/svc_fit_times.csv};
+                \addplot[color=green] table [x=N, y=L, col sep=comma, mark=none] {data/svc_fit_times.csv};
+                \addplot[color=orange] table [x=N, y=XL, col sep=comma, mark=none] {data/svc_fit_times.csv};
+        \end{axis}
+        \end{tikzpicture}
         \caption{Training times with unscaled features}
         \label{fig:svc_fit_times}
     \end{subfigure}
-    \begin{subfigure}[b]{0.49\textwidth}
+    \centering
+        \hfill
+    \begin{subfigure}[t]{0.49\textwidth}
         \centering
-        \includestandalone[width=\linewidth]{figures/svc_fit_times_scaled}
+        \begin{tikzpicture}[scale=0.8]
+            \begin{axis}[
+                xlabel={\# of Neighbors},
+                ylabel={Training time (s)},
+                  ]
+                \addplot[color=blue]table [x=N, y=S, col sep=comma, mark=none] {data/svc_fit_times_scaled.csv};
+                \addplot[color=red] table [x=N, y=M, col sep=comma, mark=none] {data/svc_fit_times_scaled.csv};
+                \addplot[color=green] table [x=N, y=L, col sep=comma, mark=none] {data/svc_fit_times_scaled.csv};
+                \addplot[color=orange] table [x=N, y=XL, col sep=comma, mark=none] {data/svc_fit_times_scaled.csv};
+        \end{axis}
+        \end{tikzpicture}
         \caption{Training times with scaled features}
         \label{fig:svc_fit_times_scaled}
     \end{subfigure}
-    \begin{subfigure}[b]{0.49\textwidth}
+    \begin{subfigure}[t]{0.49\textwidth}
         \centering
-        \includestandalone[width=\linewidth]{figures/svc_pred_times}
+        \begin{tikzpicture}[scale=0.8]
+            \begin{axis}[
+                xlabel={\# of Neighbors},
+                ylabel={Prediction time (s)},
+                  ]
+                \addplot[color=blue]table [x=N, y=S, col sep=comma, mark=none] {data/svc_pred_times.csv};
+                \addplot[color=red] table [x=N, y=M, col sep=comma, mark=none] {data/svc_pred_times.csv};
+                \addplot[color=green] table [x=N, y=L, col sep=comma, mark=none] {data/svc_pred_times.csv};
+                \addplot[color=orange] table [x=N, y=XL, col sep=comma, mark=none] {data/svc_pred_times.csv};
+        \end{axis}
+        \end{tikzpicture}
         \caption{Prediction times with unscaled features}
         \label{fig:svc_pred_times}
     \end{subfigure}
-    \begin{subfigure}[b]{0.49\textwidth}
+    \centering
+        \hfill
+    \begin{subfigure}[t]{0.49\textwidth}
         \centering
-        \includestandalone[width=\linewidth]{figures/svc_pred_times_scaled}
+        \begin{tikzpicture}[scale=0.8]
+            \begin{axis}[
+                xlabel={\# of Neighbors},
+                ylabel={Prediction time (s)},
+                  ]
+                \addplot[color=blue]table [x=N, y=S, col sep=comma, mark=none] {data/svc_pred_times_scaled.csv};
+                \addplot[color=red] table [x=N, y=M, col sep=comma, mark=none] {data/svc_pred_times_scaled.csv};
+                \addplot[color=green] table [x=N, y=L, col sep=comma, mark=none] {data/svc_pred_times_scaled.csv};
+                \addplot[color=orange] table [x=N, y=XL, col sep=comma, mark=none] {data/svc_pred_times_scaled.csv};
+        \end{axis}
+        \end{tikzpicture}
         \caption{Prediction times with scaled features}
-        \label{fig:dtc_pred_times_scaled}
+        \label{fig:svc_pred_times}
     \end{subfigure}
-    \caption{Support Vector Machines}
-    \label{fig:svc}
+    \caption{Metrics for svc}
+    \label{fig:svc_bla}
 \end{figure}
+
+
+
+
+%\begin{figure}[!htb]
+    %\centering
+    %\begin{subfigure}[htb]{0.49\textwidth}
+        %\centering
+        %\includestandalone[width=\linewidth]{figures/knn_accs}
+        %\label{fig:knn_accs}
+    %\end{subfigure}
+    %\begin{subfigure}[htb]{0.49\textwidth}
+        %\centering
+        %\includestandalone[width=\linewidth]{figures/knn_accs_scaled}
+        %\caption{Accuracy with scaled features}
+        %\label{fig:knn_accs_scaled}
+    %\end{subfigure}\\
+    %\begin{subfigure}[htb]{0.49\textwidth}
+        %\centering
+        %\includestandalone[width=\linewidth]{figures/knn_fit_times}
+        %\caption{Training times with unscaled features}
+        %\label{fig:knn_fit_times}
+    %\end{subfigure}
+    %\begin{subfigure}[htb]{0.49\textwidth}
+        %\centering
+        %\includestandalone[width=\linewidth]{figures/knn_fit_times_scaled}
+        %\caption{Training times with scaled features}
+        %\label{fig:knn_fit_times_scaled}
+    %\end{subfigure}\\
+    %\begin{subfigure}[htb]{0.49\textwidth}
+        %\centering
+        %\includestandalone[width=\linewidth]{figures/knn_pred_times}
+        %\caption{Prediction times with unscaled features}
+        %\label{fig:knn_pred_times}
+    %\end{subfigure}
+    %\begin{subfigure}[htb]{0.49\textwidth}
+        %\centering
+        %\includestandalone[width=\linewidth]{figures/knn_pred_times_scaled}
+        %\caption{Prediction times with scaled features}
+        %\label{fig:knn_pred_times_scaled}
+    %\end{subfigure}
+    %\caption{K-nearest Neighbors}
+    %\label{fig:knn}
+%\end{figure}
+
+%\begin{figure}[!htb]
+    %\centering
+    %\begin{subfigure}[htb]{0.49\textwidth}
+        %\centering
+        %\includestandalone[width=\linewidth]{figures/dtc_accs}
+        %\caption{Accuracy with unscaled features}
+        %\label{fig:dtc_accs}
+    %\end{subfigure}
+    %\begin{subfigure}[htb]{0.49\textwidth}
+        %\centering
+        %\includestandalone[width=\linewidth]{figures/dtc_accs_scaled}
+        %\caption{Accuracy with scaled features}
+        %\label{fig:dtc_accs_scaled}
+    %\end{subfigure}
+    %\begin{subfigure}[htb]{0.49\textwidth}
+        %\centering
+        %\includestandalone[width=\linewidth]{figures/dtc_fit_times}
+        %\caption{Training times with unscaled features}
+        %\label{fig:dtc_fit_times}
+    %\end{subfigure}
+    %\begin{subfigure}[htb]{0.49\textwidth}
+        %\centering
+        %\includestandalone[width=\linewidth]{figures/dtc_fit_times_scaled}
+        %\caption{Training times with scaled features}
+        %\label{fig:dtc_fit_times_scaled}
+    %\end{subfigure}
+    %\begin{subfigure}[htb]{0.49\textwidth}
+        %\centering
+        %\includestandalone[width=\linewidth]{figures/dtc_pred_times}
+        %\caption{Prediction times with unscaled features}
+        %\label{fig:dtc_pred_times}
+    %\end{subfigure}
+    %\begin{subfigure}[htb]{0.49\textwidth}
+        %\centering
+        %\includestandalone[width=\linewidth]{figures/dtc_pred_times_scaled}
+        %\caption{Prediction times with scaled features}
+        %\label{fig:dtc_pred_times_scaled}
+    %\end{subfigure}
+    %\caption{Decision Trees}
+    %\label{fig:dtc}
+%\end{figure}
+
+%\begin{figure}
+    %\centering
+    %\begin{subfigure}[htb]{0.49\textwidth}
+        %\centering
+        %\includestandalone[width=\linewidth]{figures/svc_accs}
+        %\caption{Accuracy with unscaled features}
+        %\label{fig:svc_accs}
+    %\end{subfigure}
+    %\begin{subfigure}[htb]{0.49\textwidth}
+        %\centering
+        %\includestandalone[width=\linewidth]{figures/svc_accs_scaled}
+        %\caption{Accuracy with scaled features}
+        %\label{fig:svc_accs_scaled}
+    %\end{subfigure}
+    %\begin{subfigure}[b]{0.49\textwidth}
+        %\centering
+        %\includestandalone[width=\linewidth]{figures/svc_fit_times}
+        %\caption{Training times with unscaled features}
+        %\label{fig:svc_fit_times}
+    %\end{subfigure}
+    %\begin{subfigure}[b]{0.49\textwidth}
+        %\centering
+        %\includestandalone[width=\linewidth]{figures/svc_fit_times_scaled}
+        %\caption{Training times with scaled features}
+        %\label{fig:svc_fit_times_scaled}
+    %\end{subfigure}
+    %\begin{subfigure}[b]{0.49\textwidth}
+        %\centering
+        %\includestandalone[width=\linewidth]{figures/svc_pred_times}
+        %\caption{Prediction times with unscaled features}
+        %\label{fig:svc_pred_times}
+    %\end{subfigure}
+    %\begin{subfigure}[b]{0.49\textwidth}
+        %\centering
+        %\includestandalone[width=\linewidth]{figures/svc_pred_times_scaled}
+        %\caption{Prediction times with scaled features}
+        %\label{fig:dtc_pred_times_scaled}
+    %\end{subfigure}
+    %\caption{Support Vector Machines}
+    %\label{fig:svc}
+%\end{figure}
 
 From Figs~\ref{fig:knn}, \ref{fig:dtc} and \ref{fig:svc} a couple of conclusions can be extracted. First, it is seen that the accuracy of the model increases as more data is taken into consideration, which is well according with the theory and serves as queue for applying the same implementation with more data as proposed in chapter~\ref{ch:conclusions}. Furthermore, three different behaviours are appreciated:
 
 \begin{itemize}
     \item: As complexity increases, the K-nearest neighbors algorithm shows a decrease on its overall accuracy, which is an indication that the model is overfitting, and suggests that with such a complexity (50 neighbors, in this case), the model is starting to "memorize" characteristics of the training dataset, and is set to perform badly if unknown samples are feed to it, as its capabilities for generalization are in decay. Moreover, the prediction times for the highest level of complexity are already about two times greater than the second highest, making it not suitable for live implementations. Furthermore, this model shows a both a reduction in accuracy as well as an increase in prediction time when the features have been scaled, which simply states that the model performs well without further data preprocessing right after the feature extraction.
     \item The decision tree model shows a steady increase on its accuracy as complexity increases, without reaching a clear overfitting state. Complexity has a clear effect on the training times, but it is still on the range of the milliseconds - being a process done only once, this does not affect dramatically the model selection and does not closes the possibility of increasing the complexity for this specific use case. This can also be backed on the fact that  the prediction times seem to stay constant with this increase. Interestingly, not only the training times are reduced after scaling, but also the prediction times are drastically improved, reaching about 10x faster predictions using the standard scaler. With comparable accuracy, scaling the features seems like a prospect procedure when this model is used in time demanding or live implementations.
+        The low accuracy of this model when a depth=2 does not come as a surprise. As the classification is done based on \emph{if-then} steps, having such a short depth can only provide four possible predicted values, as it can be seen in the extracted tree shown in Fig~\ref{fig:dt_2}. This model is generated as an experimental excercise to show this behavior, and to make the statement that the depth of the tree has to be able to generate at least as much answers as classes of the problem, which in this specific use case if achieved with a depth=5. Graphical representations of complex decision trees is easily generated, but they become overwhelming for them to be shown in this print. The procedure to generate these trees is explained in the development notebook of this thesis \cite{repo:cognitive_radio_ml}.
+
+\begin{figure}[!htb]
+    \centering
+      \includegraphics[width=\textwidth]{figures/dt_2}
+      \caption{Extracted representation of a trained decision tree with depth=2}
+      \label{fig:dt_2}
+\end{figure}
+
     \item the \ac{SVM} do not show a clear tendency to improve as complexity is increased, and just like the K-nearest neighbor models, performs quite well in small sizes of datasets. However, the best accuracy for this model is still below the accuracies of the other models regarded in this benchmark. Additionally, the training and prediction times exceed dramatically the times achieved with the other models, being about 8000 longer for training and around 500 times longer for prediction. The fact that this model is that slow will definitely affect considerably the performance of realtime implementations, aspect that is crucial in systems such as cognitive radio.
 \end{itemize}
 
@@ -232,39 +579,105 @@ Based on this analysis, one model of each kind is selected to be implemented on 
 \end{itemize}
 
 
+\subsection{Image Classification}
+For the image classification part of this work, a sequential model based on the work of \cite{Paisana2017} was implemented. The basic structure of this model is shown in Fig~\ref{fig:cnn}. As it can be seen, the model is composed by the connection of different layers, each of them with an specific functionality.
+
 \begin{figure}[!htb]
     \centering
-    \begin{subfigure}[htb]{0.49\textwidth}
-        \centering
-        \begin{tikzpicture}[scale=0.9]
-            \begin{axis}[
-                xlabel={Iterations},
-                ylabel={Loss Factor \%},
-                  ]
-                \addplot table [x=epoch, y=loss, col sep=comma, mark=none] {data/adadelta.csv};
-                \addplot table [x=epoch, y=val_loss, col sep=comma, mark=none] {data/adadelta.csv};
-                \legend{Training loss, Validation loss}
-        \end{axis}
-        \end{tikzpicture}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}[htb]{0.49\textwidth}
-        \centering
-        \begin{tikzpicture}[scale=0.9]
-            \begin{axis}[legend pos=south east,
-                xlabel={Iterations},
-                ylabel={Accuracy \%},
-                  ]
-                \addplot table [x=epoch, y=acc, col sep=comma, mark=none] {data/adadelta.csv};
-                \addplot table [x=epoch, y=val_acc, col sep=comma, mark=none] {data/adadelta.csv};
-                \legend{Accuracy, Validation Accuracy}
-        \end{axis}
-        \end{tikzpicture}
-    %}
-    \end{subfigure}
-    \caption{Metrics for Adadelta Optimizer}
-    \label{fig:adadelta}
+      \includegraphics[width=\textwidth]{figures/cnn}
+      \caption{Schema of the implemented CNN}
+      \label{fig:cnn}
 \end{figure}
+
+\begin{itemize}
+    \item Convolution2D: this comprises a convolutional kernel. It convolves the input to produce tensors at its output. This is the backbone of the \ac{CNN}, as it is the responsible for learning. Here, 2-Dimensional convolutional blocks are applied, as it is convolving over the area of the input images.
+    \item MaxPool: this layer serves it purpose for dimension reduction, which is a form of downsampling. Briefly, it divides the input tensor into 2x2 non-overlapping squares and keeps the greater value present in each of these cells, effectively reducing the the size of the representation, which in consequence reduces the amount of parameters transitting the network. This has the effect of reducing the number of vector operations as well, making each layer of the network less processing-demandant. Additionally, as paramteres are being dropped, this helps avoiding overfitting by disregarding eventual characteristics that are being "memorized". The principle of operation of such layers is shown in Fig~\ref{fig:maxpool}.
+        \begin{figure}[!htb]
+            \centering
+              \includegraphics[width=0.4\textwidth]{figures/maxpool}
+              \caption{2-D MaxPool}
+              \label{fig:maxpool}
+        \end{figure}
+    \item \ac{ReLu}: this is an activation layer, i.e. a layer that applies a function that defines the type of output depending on its input. In the \ac{ReLu} case, the applied function is \(f(x) =\max(0,x) \), where x is the input of the neuron. Being this a non linear function, this activation increases the nonlinearity of the network without affecting the visual field, as there is no reduction of dimension.
+        \begin{figure}[!htb]
+            \centering
+                \begin{tikzpicture}[scale=0.9]
+                    \begin{axis}[
+                        xlabel={$x$},
+                        ylabel={$f(x)$},
+                    ]
+                        \addplot[domain=0.001:3,samples=201,purple,thick,smooth]{x};
+                        \addplot[domain=-3:0.001,samples=201,purple,thick,smooth]{0};
+                    \end{axis}
+                \end{tikzpicture}
+              \caption{ReLu activation function}
+              \label{fig:maxpool}
+        \end{figure}
+    \item Fully connected layer: as the name states, this layer is connected to each and every one of the activations of the previous layers. This type of layers are the principle of operation of traditional neural networks, and is in charge of learning the non-linearities that have been propagated throughout the network.
+    \item Softmax: this is also an activation layer. It takes vector q of dimension K and compress it together to values that add up to one. The function is given by
+        \begin{equation}
+            P(q)_i = \frac{e^{q_i}}{\sum_{k=1}^{K} \exp{q_j}}
+        \end{equation}
+
+        It can be easily understood that the dimension of the output from this softmax function is the amount of labels to classify, and that the value of each is the probability of the input sample to belong to that class. Consequently, the classification result is the \( \argmax \) of the function output.
+\end{itemize}
+
+The chosen layers and its disposition are strictly related to the input. In this case, the input picture has a 64x64 size, which describes then the height and width of the first layer. The depth is the amount of filters that are used for each layer, and it is, to some extend, represented in the extension of the scale of Fig~\ref{fig:cnn}. 5 convolutional layers, with kernel dimensions 2x2, were used in this sequential model, with depths of 48, 128, 192, 192 and 128 filters correspondingly. At the end of the sequential model, 3 fully connected layers with depth 1024, 1024 and 10 was used. The sequence of dimension changes of the sequential model and the number of parameters considered in each of the stages of the classification problem is summarized in Table~\ref{table:convnet_summary}. The number of parameters are the amount of trainable weights that each layer contains. For a convolutional layer, this are calculated as \( \text{\# parameters} = \text{(depth of input tensor)}\cdot\text{(depth output tensor)}\cdot\text{height}_{kernel}\cdot \text{width}_{kernel} + \text{(depth output tensor)} \). As an example, the calculation for the first layer gives:
+\begin{equation*}
+    1 \cdot 48 \cdot 2 \cdot 2 + 48 = 240
+\end{equation*}
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+        \textbf{Layer} & \textbf{Output Shape} & \textbf{\# Parameters} \\
+        \hline\hline
+        Convolution \# 1 & (63, 63, 48) & 240 \\\hline
+        ReLu \# 1 & (63, 63, 48) & 0 \\\hline
+        MaxPooling \# 1 & (31, 31, 48) & 0 \\\hline
+        Convolution \# 2 & (30, 30, 128) & 24704 \\\hline
+        ReLu \# 2 & (30, 30, 128) & 0 \\\hline
+        MaxPooling \# 2 & (15, 15, 128) & 0 \\\hline
+        Convolution \# 3 & (14, 14, 192) & 98496 \\\hline
+        ReLu \# 3 & (14, 14, 192) & 0 \\\hline
+        MaxPooling \# 3 & (7, 7, 192) & 0 \\\hline
+        Convolution \# 4 & (6, 6, 192) & 147648 \\\hline
+        ReLu \# 4 & (6,6, 192) & 0 \\\hline
+        MaxPooling \# 4 & (3, 3, 192) & 0 \\\hline
+        Convolution \# 5 & (2, 2, 128) & 98432 \\\hline
+        ReLu \# 5 & (2,2, 128) & 0 \\\hline
+        MaxPooling \# 5 & (1, 1, 128) & 0 \\\hline
+        flatten & 128 & 0 \\\hline
+        Fully Connect \#1 & 1024 & 132096 \\\hline
+        Fully Connect \#2 & 1024 & 1049600 \\\hline
+        Fully Connect \#3 & 10 & 10250 \\\hline
+        Softmax & 10 & 0 \\\hline
+        \hline
+    \end{tabular}
+    \caption{ConvNet dimensions and Number of Parameters}
+    \label{table:convnet_summary}
+\end{table}
+
+The sequential model performs an optimization over its error function, for which the optimizer used can be selected. Keras provides a variety of these optimizers, using the approach of steepest descent optimization over an objective function, \(J(\theta)\) with \(\theta \in \mathbb{R}^{d}\), being \(d\) the dimension of the objective function, by updating the parameters in the opposite direction of the gradient of \(J\), i.e.
+
+\begin{equation}
+    \nabla_\theta J(\theta) \text{  w.r.t } \theta, x, y
+\end{equation}
+
+A tuneable parameter is the learning rate \(\eta\), that determines the size of the steps taken to reach the minimum. For this work, three different optimizers were used and analized based on the resulting accuracy of the classification over the test data, as well as its value for error during validation.
+
+\begin{itemize}
+    \item Stochastic gradient descent: this algorithm performs a parameter update after each training sample
+        \begin{equation}
+            \theta = \theta - \eta \cdot \nabla_\theta J(\theta;x^i;y^i)
+        \end{equation}
+        This optimizer was used in \cite{Paisana2017} and was used as a baseline. The learning rate \(\eta\) was decreased every one fourth of the total iterations, which in this specific use case was set to 3000. Decreasing the learning rate increases the chance that this optimizer reaches a local minima.
+    \item Adadelta \cite{Zeiler2012a}: this optimizer is based on the Adagrad optimizer \cite{Duchi2011}, which adapts intrinsically its learning rate to the parameters, therefore doing bigger updates for infrequent parameters, and smaller updates for frequent ones. It is proven that this optimizer is more robust than the stochastic gradient descent \cite{Duchi2011} by storing all previous squared gradients and updating accordingly. Adadelta extends this robustness by restricting the amount of accumulated squared gradients to a fixed window, and using this accumulation for its updates.
+    \item Adamax: based on the Adaptive Moment Estimation - Adam \cite{Kingma2014}, this optimizer also sets an adaptive learning rate based on the parameters of the objective function. Additionally to setting a fixed window of past squared decays as Adadelta, Adam also keeps an exponentially decaying averace of past gradients, which is similar to a momentum \cite{Dahl2013}. Adamax extends Adam functionallity by maximizing the norm of the update vector, which leads to a stable behavior.
+\end{itemize}
+
+The validation of the models was performed based on the accuracy that these optimizers have during training and testing, the loss factor during the same stages, which is a measure of the error provided by the optimization process. The results are shown in Figs~\ref{fig:sgd}, \ref{fig:adamax} and \ref{fig:adadelta}.
 
 \begin{figure}[!htb]
     \centering
@@ -273,7 +686,41 @@ Based on this analysis, one model of each kind is selected to be implemented on 
         \begin{tikzpicture}[scale=0.8]
             \begin{axis}[
                 xlabel={Iterations},
-                ylabel={Loss Factor \%},
+                ylabel={Loss Factor},
+                  ]
+                \addplot table [x=epoch, y=loss, col sep=comma, mark=none] {data/sgd.csv};
+                \addplot table [x=epoch, y=val_loss, col sep=comma, mark=none] {data/sgd.csv};
+                \legend{Training loss, Validation loss}
+        \end{axis}
+        \end{tikzpicture}
+    \end{subfigure}
+        \hfill
+    \begin{subfigure}[htb]{0.49\textwidth}
+        \centering
+        \begin{tikzpicture}[scale=0.8]
+            \begin{axis}[legend pos=south east,
+                xlabel={Iterations},
+                ylabel={Accuracy},
+                  ]
+                \addplot table [x=epoch, y=acc, col sep=comma, mark=none] {data/sgd.csv};
+                \addplot table [x=epoch, y=val_acc, col sep=comma, mark=none] {data/sgd.csv};
+                \legend{Accuracy, Validation Accuracy}
+        \end{axis}
+        \end{tikzpicture}
+    \end{subfigure}
+    \caption{Metrics for Steepest Gradient descent Optimizer}
+    \label{fig:sgd}
+\end{figure}
+
+
+\begin{figure}[!htb]
+    \centering
+    \begin{subfigure}[htb]{0.49\textwidth}
+        \centering
+        \begin{tikzpicture}[scale=0.8]
+            \begin{axis}[
+                xlabel={Iterations},
+                ylabel={Loss Factor},
                   ]
                 \addplot table [x=epoch, y=loss, col sep=comma, mark=none] {data/adamax.csv};
                 \addplot table [x=epoch, y=val_loss, col sep=comma, mark=none] {data/adamax.csv};
@@ -287,7 +734,7 @@ Based on this analysis, one model of each kind is selected to be implemented on 
         \begin{tikzpicture}[scale=0.8]
             \begin{axis}[legend pos=south east,
                 xlabel={Iterations},
-                ylabel={Accuracy \%},
+                ylabel={Accuracy},
                   ]
                 \addplot table [x=epoch, y=acc, col sep=comma, mark=none] {data/adamax.csv};
                 \addplot table [x=epoch, y=val_acc, col sep=comma, mark=none] {data/adamax.csv};
@@ -303,32 +750,66 @@ Based on this analysis, one model of each kind is selected to be implemented on 
     \centering
     \begin{subfigure}[htb]{0.49\textwidth}
         \centering
-        \begin{tikzpicture}[scale=0.8]
+        \begin{tikzpicture}[scale=0.9]
             \begin{axis}[
                 xlabel={Iterations},
-                ylabel={Loss Factor \%},
+                ylabel={Loss Factor},
                   ]
-                \addplot table [x=epoch, y=loss, col sep=comma, mark=none] {data/sgd.csv};
-                \addplot table [x=epoch, y=val_loss, col sep=comma, mark=none] {data/sgd.csv};
+                \addplot table [x=epoch, y=loss, col sep=comma, mark=none] {data/adadelta.csv};
+                \addplot table [x=epoch, y=val_loss, col sep=comma, mark=none] {data/adadelta.csv};
                 \legend{Training loss, Validation loss}
         \end{axis}
         \end{tikzpicture}
     \end{subfigure}
-        \hfill
+    \hfill
     \begin{subfigure}[htb]{0.49\textwidth}
         \centering
-        \begin{tikzpicture}[scale=0.8]
+        \begin{tikzpicture}[scale=0.9]
             \begin{axis}[legend pos=south east,
                 xlabel={Iterations},
-                ylabel={Accuracy \%},
+                ylabel={Accuracy},
                   ]
-                \addplot table [x=epoch, y=acc, col sep=comma, mark=none] {data/sgd.csv};
-                \addplot table [x=epoch, y=val_acc, col sep=comma, mark=none] {data/sgd.csv};
+                \addplot table [x=epoch, y=acc, col sep=comma, mark=none] {data/adadelta.csv};
+                \addplot table [x=epoch, y=val_acc, col sep=comma, mark=none] {data/adadelta.csv};
                 \legend{Accuracy, Validation Accuracy}
         \end{axis}
         \end{tikzpicture}
+    %}
     \end{subfigure}
-    \caption{Metrics for Steepest Gradient descent Optimizer}
+    \caption{Metrics for Adadelta Optimizer}
     \label{fig:adadelta}
 \end{figure}
-\section{Dyspan setup comparison}
+
+From this plots it can clearly be seen that SGD takes a greater number of iterations to reach its maximum accuracy as well as its minimum loss factor in comparison with Adamax and Adadelta. With respect to their comparative accuracies, it is not conclusive that one of the optimizers provide a better result. The maximum and final values of the accuracies of these models are shown in Table~\ref{table:convnet_accs}, whilst the minimum and final values for the loss factor is shown in Table~\ref{table:convnet_loss}.
+
+\begin{table}[!ht]
+  \centering
+    \begin{tabular}{| >{\centering\arraybackslash}m{5em}| >{\centering\arraybackslash}m{7em}| >{\centering\arraybackslash}m{7em}| >{\centering\arraybackslash}m{7em}| >{\centering\arraybackslash}m{7em}|}
+    \cline{2-5}
+      \multicolumn{1}{c|}{} & Max Training Accuracy (Iter) & Final Training Accuracy & Max Validation Accuracy (iter) & Final Validation accuracy \\ \hline
+      SGD & 99\% (2411)   & 98\%   & 90\% (981) & 81\%  \\ \hline
+      Adamax & 92\% (2997)   & 88\%   & 87\% (2679) & 77\%  \\ \hline
+      Adadelta & 100\%(2012)   & 99.6\%   & 89\% (489) & 85\%  \\ \hline
+  \end{tabular}
+    \caption{Maximum and Final Accuracies for ConvNets with various optimizers}
+    \label{table:convnet_accs}
+\end{table}
+
+
+\begin{table}[!ht]
+  \centering
+    \begin{tabular}{| >{\centering\arraybackslash}m{5em}| >{\centering\arraybackslash}m{7em}| >{\centering\arraybackslash}m{7em}| >{\centering\arraybackslash}m{7em}| >{\centering\arraybackslash}m{7em}|}
+    \cline{2-5}
+      \multicolumn{1}{c|}{} & Min Training Loss (Iter) & Final Training Loss & Min Validation Loss (iter) & Final Validation Loss \\ \hline
+  SGD & 0.625 (2866)   & 0.64   & 0.863 (861) & 1.134  \\ \hline
+      Adamax & 0.24 (2997)   & 0.37   & 0.47 (1150) & 0.93  \\ \hline
+      Adadelta & 0.03 (2998)   & 0.04   & 0.4 (297) & 0.74  \\ \hline
+  \end{tabular}
+    \caption{Maximum and Final Loss Factor for ConvNets with various optimizers}
+    \label{table:convnet_loss}
+\end{table}
+
+The low values for losses as well as high values for accuracies in the training process do not come as a surprise, but it is the iteration where they are reached what is significant to be analyzed, as they state the rate of convergence of each of the optimizers. For the training phase, it is also expected that these values are constantly increasing along he whole process, as the model keeps learning from the data and fits to it. Therefore, it is of special interest to focus the attention to the validation part. Regarding the accuracy value, it is not conclusive to determine an algorithm that outperforms the others. Additionally, an accuracy greater than 87\% for all the optimizers is satisfactory, keeping in mind that these models are trained with spectrograms with SNR as low as -5dB, where the \ac{PU} signal is well below the noise level. It is clear that the rate of convergence of Adadelta surpasses the performance of the other optimizers, for both the maximum validation accuracy as well as the minimum validation loss, which states that using early stop techniques allows to have a satisfactory model with short training time. More insights about the early stop techniques are given in the following chapter, where it will be clear why the maximum validation accuracy and minimum validation loss are important values to be considered.
+
+Looking carefully at the loss factor plots for validation, a clear tendency of the increase of this parameter at the end of the interative process can be seen for the Adamax and Adadelta optimizers, which is an indication of overfitting. Although not clear from the plots, SGD also shows overfitting behavior to some extend, as it can be seen in the noticeable difference on the maximum accuracy vs the final accuracy in table~\ref{table:convnet_accs}.
+

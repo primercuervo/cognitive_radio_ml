@@ -6,7 +6,7 @@ As stated in the introduction of this thesis, \ac{SDR} and \ac{CR} play an impor
 \subsection{GNURadio}
 \begin{figure}[htb]
     \centering
-      \includegraphics[width=\textwidth]{figures/gnuradio_logo}
+      \includegraphics[width=0.8\textwidth]{figures/gnuradio_logo}
       \caption{GNURadio logo}
       \label{fig:gnuradio}
 \end{figure}
@@ -29,6 +29,8 @@ The library of algorithms is organized in modules that have a common purpose, an
 
 Although coding to the base of the modules and blocks gives the user total control of the details, it is not the only way of getting things done while using GNURadio. The software comes with a \ac{GUI} called \ac{GRC}, which allows the user to drag-and-drop blocks into a canvas and connect them directly with the ease of a click. Even experienced users grab a hold on this \ac{GUI} as it provides ease and versatility along with a visible flowgraph that is easy to understand not only for the user but also to other users whose interest has been drawn to a specific application.\\
 
+Additionally, GNURadio features the \ac{VOLK}\cite{VOLK}, a free librarly of hand-written SIMD mathematical operations used to handle vectorization efficiently. This library is used in this world to optimize operations in the spectrogram generation process, described in section~\ref{ch:spectrogram}.\\
+
 In order to use GNURadio, the recommended installation is done by the means of \ac{PyBOMBS} \cite{PyBOMBS}, which also allows installation of the modules listed at \ac{CGRAN}.
 
 \subsection{Universal Software Radio Peripheral}
@@ -41,7 +43,7 @@ In order to use GNURadio, the recommended installation is done by the means of \
 
 One of the \ac{SDR} devices that is supported by GNURadio is the \ac{USRP}, which is developed and produced by the company \emph{Ettus Research\texttrademark} \cite{Ettus}. This company has been a one of the most representative suppliers of \ac{SDR} devices around the globe, and these devices are reknown by its outstanding performance and versatility.\\
 
-During the complete \ac{DySpan} spectrum challenge competition, three different \ac{USRP} devices where used for both \ac{PU} and \ac{SU}. The \ac{PU} used for the transmitter and the receiver the \ac{USRP} X310, which can be seen at Fig.~\ref{fig:x310} \cite{X300}. This device counts with two wide-\ac{BW} \ac{RF} daughterboard slots and a large customizable Xilinx Kintex-7 FPGA. Additionally, it has the capability of using high-speed interfaces such as 10gigE and PCIe, with which a maximmum of 200MS/s full duplex can be travel through the transport link. This \ac{USRP} covers from 10MHz until 6GHz, but based on the daughterboard selected, which serves as \ac{RF} frontend, the frequency of operation of the device can vary.\\
+During the complete \ac{DySpan} spectrum challenge competition, three different \ac{USRP} devices where used for both \ac{PU} and \ac{SU}. The \ac{PU} used for the transmitter and the receiver the \ac{USRP} X310, which can be seen at Fig.~\ref{fig:x300} \cite{X300}. This device counts with two wide-\ac{BW} \ac{RF} daughterboard slots and a large customizable Xilinx Kintex-7 FPGA. Additionally, it has the capability of using high-speed interfaces such as 10gigE and PCIe, with which a maximmum of 200MS/s full duplex can be travel through the transport link. This \ac{USRP} covers from 10MHz until 6GHz, but based on the daughterboard selected, which serves as \ac{RF} frontend, the frequency of operation of the device can vary.\\
 
 As for the \ac{SU} that was presented by the \ac{KIT} \ac{CEL} group, the transmitter used an \ac{USRP} N210, depicted in Fig~\ref{fig:n210} \cite{N210}. The N210 has a Xilinx Spartan 3A-DSP 3400 FPGA, and can hold up to 100MS/s through a 1gigE link that connects it to a host machine.  This device also requires an \ac{RF} daughterboard as frontend, for which in the \ac{SU} implementation the UBX-40, shown in Fig~\ref{fig:UBX} \cite{UBX}, was used. This daughterboard can operate from 10MHz to 6GHz, providing an instantaneous \ac{BW} of 40MHz. As for the receiver, a B210, shown in Fig~\ref{fig:b210} \cite{B210}, was used. This \ac{USRP} is a fully integrated, two channel device that operates from 70MHz to 6GHz without the need of additional \ac{RF} frontend configuration. It provides Full duplex, MIMO (2 Tx - 2Rx) operation up to 56 MHz of instantaneous \ac{BW}. Furthermore, it counts with a convenient USB 3.0 connection that also serves as power feed.\\
 
@@ -287,7 +289,7 @@ Although these are effectively only three features, the interframe time is analy
 
 This files are provided in the final Dataset product of this work, and a convenient script that automates the process of the feature extraction is provided at \cite{repo:cognitive_radio_ml}. As stated at the beginning of the chapter, this features will be used for supervised learning, and the results are recorded in chapter~\ref{ch:evaluation}
 
-\subsection{Spectrograms generation}
+\subsection{Spectrograms generation}\label{ch:spectrogram}
 
 The feature extraction process is convenient and works outstandingly as seen in \cite{Wunsch2017}. However, it depends on a good \ac{PU} power level in order for the frame events to be generated. A way to go around this limitation is applying a different technology, such as image recognition using \ac{ConvNet}. The idea is to generate images that describe the unique characteristics of each scenario, and feed them to an image classificator. The images that better suit this need are the spectrograms. Based on the work of \cite{Paisana2017}, spectrograms were generated using the GNURadio flowgraph shown in Fig~\ref{fig:specgram_generation}
 
@@ -299,17 +301,49 @@ The feature extraction process is convenient and works outstandingly as seen in 
 \end{figure}
 
 Most of the procedure is rather straight forward: the I/Q data files are read and its stream is moved into a vector for the \ac{FFT} calculation. Our target images are going to have a 64x64 pixels dimension, so that sets as well the FFT size to 64. The following blocks calculate the power of the signal. The last two blocks require a more detailed explanation.
-\todo{include a volk paragraph in gnuradio}
-The "Vector average" block calculates the arithmetic mean over a certain amount of vectors. For the sake of clarity, it can be assumed that this block operates over a matrix (or a 2-dimensional array) of dimensions NxM, being M the length of the input vectors, set in the block via the parameter "vector length" and set to 64 in this specific case, and N the amount of vectors to operate, set in the block via the parameter "Num Samples" and set to 120, which will become clear shortly.
-\todo{tikz magic}
-\[
-\begin{bmatrix}
-    x_{11} & x_{12} & x_{13} & \dots  & x_{1m} \\
-    x_{21} & x_{22} & x_{23} & \dots  & x_{2m} \\
-    \vdots & \vdots & \vdots & \ddots & \vdots \\
-    x_{n1} & x_{n2} & x_{n3} & \dots  & x_{nm}
-\end{bmatrix}
-\]
+The "Vector average" block calculates the arithmetic mean over a certain amount of vectors, as seen in Fig~\ref{fig:vectoravg}. For the sake of clarity, it can be assumed that this block operates over a matrix (or a 2-dimensional array) of dimensions NxM, being M the length of the input vectors, set in the block via the parameter "vector length" and set to 64 in this specific case, and N the amount of vectors to operate, set in the block via the parameter "Num Samples" and set to 120, which will become clear shortly.\\
 
-The block takes 120 vectors and presents at its output the arithmetic mean according to the matrix. After that, the block "Stack and filesink" takes 64 averaged vectors, stacks them vertically and generates an image object that is later saved as a JPEG image to disk. These images are then used for the image classification. From the files recorded using the procedure described at section~\ref{ch:measure}, a total of 84700 pictures is generated, from which 90\% is used for training the \ac{ConvNet} and 10\% is used as testing set.
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=0.7\textwidth]{figures/vectoravg}
+    \caption{Operations made in "Vector Average" block}
+    \label{fig:vectoravg}
+\end{figure}
+
+%\begin{align*}
+    %[x_{11}\quad \quad x_{12} \quad \quad x_{13}\quad \cdots\quad x_{1m}] \\
+       %+   \qquad \;  + \qquad \; +  \quad \quad \quad \quad + \quad     \\
+    %[x_{21}\quad \quad x_{22} \quad \quad x_{23}\quad \cdots\quad x_{2m}] \\
+       %+   \qquad \;  + \qquad \; +  \quad \quad \quad \quad + \quad     \\
+    %[\; \; \vdots \qquad \quad \vdots \qquad \quad \vdots \quad  \; \; \; \cdots \quad \; \vdots \quad] \\
+       %+   \qquad \;  + \qquad \; +  \quad \quad \quad \quad + \quad     \\
+    %[x_{n1} \quad \; \; x_{n2} \qquad x_{n3}\quad \cdots\quad x_{nm}] \\
+    %\; \; \; \parallel \qquad \quad \parallel \qquad \quad \parallel \quad  \; \; \;  \qquad \; \parallel \quad \\
+%\end{align*}
+%\[
+    %[\sum{x_{i1}} \quad \sum{x_{i2}} \quad \sum{x_{i3}} \quad \sum{x_{im}}] / n = \text{ Vector average }\mathbf{a}
+%\]
+%\[
+%\begin{bmatrix}
+    %a_{11} & a_{12} & a_{13} & \dots  & a_{1m} \\
+    %a_{21} & a_{22} & a_{23} & \dots  & a_{2m} \\
+    %\vdots & \vdots & \vdots & \ddots & \vdots \\
+    %a_{m1} & a_{m2} & a_{m3} & \dots  & a_{mm}
+%\end{bmatrix}
+%\]
+%\begin{align*}
+    %[a_{11}\quad \quad a_{12} \quad \quad a_{13}\quad \cdots\quad a_{1m}] \\
+    %[a_{21}\quad \quad a_{22} \quad \quad a_{23}\quad \cdots\quad a_{2m}] \\
+    %[\; \; \vdots \qquad \;\;\; \vdots \qquad \quad \vdots \quad  \; \; \; \cdots \quad \; \vdots \quad] \\
+    %[a_{m1} \; \quad a_{m2} \qquad a_{m3} \;\;\;  \cdots \;\; a_{mm}] \\
+%\end{align*}
+
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=\textwidth]{figures/stack_n_save}
+    \caption{Operations made in "Stack and Filesing" block}
+    \label{fig:stacknsave}
+\end{figure}
+
+The block takes 120 vectors and presents at its output the arithmetic mean according to the matrix. After that, the block "Stack and filesink" takes 64 averaged vectors, stacks them vertically and generates an image object that is later saved as a JPEG image to disk, as seen in Fig~\ref:fig{stacknsave}. These images are then used for the image classification. From the files recorded using the procedure described at section~\ref{ch:measure}, a total of 84700 pictures is generated, from which 90\% is used for training the \ac{ConvNet} and 10\% is used as testing set.
 
