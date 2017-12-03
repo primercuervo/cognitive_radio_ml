@@ -1,25 +1,21 @@
 \chapter{Conclusion}\label{chapter:conclusion} \label{ch:conclusions}
-So you made it!
-This is the last part of your thesis.
-Tell everyone what happened.
-You did something... and you could show that ... followed.
+Using the setup of the DySpan Spectrum Challenge 2017, the identified need was to determine the transmission fashion that the \ac{PU} has, which switched randomly between ten different scenarios, each one with different characteristics. Although it represents a complex exercise to try to describe this behavior analyticallly, it was observed that each scenario had a clear pattern, and that this pattern could be recorded for further analysis, making this a suitable situation in which machine learning techniques could be applied, and it is shown in this work that these methods provide a satisfactory performance on providing spectrum awareness for interweave systems.
 
-In the end make a personal statement.
-Why would one consider this thesis to be useful?
+Two main learning techniques are proposed:
 
+\begin{itemize}
+    \item feature-based learning using K-nearest neighbors, decision trees and support vector machines classifiers
+    \item spectrogram-based learning using convolutional neural networks and different optimizers such as stochastic gradient descent, adamax and adadelta.
+\end{itemize}
 
-A pattern exists.
-
-We cannot pin it down mathematically.
-
-A data set.
+The feature-based classifiers have a satisfactory performance, reaching up to 95\% of accuracy and representing an improvement over the implementation used in the DySpan Spectrum Challenge in the way that\todo{complete} . However, they have the inherent limitation from the energy detection based feature extraction, which only allows these classifiers to make decisions in the presence of relatively high (>5dB) PU SNR. Additionally, it is seen that there is still a high correlation between the features for scenario 5 and scenario 9 (scenarios with full bandwidth occupation and same average interframe delay, varying solely in their interframe delay distribution: deterministic for the former, Poisson for the latter). This leads to misclassification even on situations where the \ac{PU} \ac{SNR} is high. This is an invitation to invest further effort on identifying a feature that separates these two scenarios with a higher confidence. Apart from this drawback, for situations where the \ac{PU} power is relatively high, very simple classifiers can be implemented with very small datasets and surprisingly low training and prediction times. K-nearest neighbors and decision trees are recommended for such situations, providing an accuracy up to 98\% with solely the equivalent of 2.5 minutes of recorded data, being able to generate a prediction in less than 200ms. Support vector machines, in the configuration that was analyzed in this work, are noticeable worse performing, taking several times longer to train and to predict. Furthermore, they are sensitive to scaling, which represents an additional step in data preprocessing, and therefore are less recommended for this specific use-case.
 
 
+Spectrograms classifiers require a longer time to train than the feature-based classifiers. Nevertheless, using techniques as the model checkpoint, reliable models such as the Sequential model using Adadelta optimizer could be generated with a training as short as 297 iterations. In the consumer, off-the-shelf, laptop on which this model was trained, this represents a training as short as 30 minutes, being outstandingly accessible for fast implementations  providing superior results. For deep learning approaches, this sequential model with an Adadelta optimizer is recommended.
+Furthermore, the need for dedicated hardware for image classification is gradually decreasing with the expanding number of cloud services for this type of procedures. Being able to use dedicated remote hardware could lead to a fast generation of convolutional networks which could potentiate experimentation and research.
 
-Future work
+As product of this work a reproducible testbed is generated, which serves as a kick-off point for fast experimentation using learning techniques in real communications systems. There are several other machine learning algorithms that are yet to be implemented, analyzed and benchmarked, for which this work serves as a reliable comparison framework. Moreover, although the recording of raw I/Q samples for this work required up to 300GB of hard disk space, the number of samples after preprocessing (around 80.000 features/label pairs and around 85.000 images for classification) are still considered a small dataset. With an improved file management, analysis of these training techniques with a bigger dataset is of special interest for future work. Besides, this work focused on keeping the configuration as loyal to the Spectrum Challenge as possible. However, a careful reduction of the sampling rate should not lead to any functionality difference, leading to less hard disk space needs and, consequently, allowing longer observations.
 
-reduce sample rate: modify filters to make it work -> less data saved to disk -> longer observations
-base feature extraction on sample number, not on time
-Feature extraction that separatces 5 and 9
-%hiperparameter optimization https://www.kernix.com/blog/a-toy-convolutional-neural-network-for-image-classification-with-keras_p14
-Move calculation to cloud clusters
+Also, the approach for the \ac{PU} measurements was based on fixed recording times which for the feature generation process leads to a different amount of samples depending on the scenario. Different approaches to achieve bigger datasets, such as counting generated features at the recording system might be worth further investigation.
+
+Lastly, although satisfactory results are achieved on spectrum awareness, being able to confidently identify the way the \ac{PU} is accessing to the spectrum, it is paramount to extend the functionality of this awareness to the situation in which the \ac{SU} is able to effectively use the time and frequency slots available without interfering the ongoing communication link. Enhancing the results captured in this work to an adaption mechanism in which effective access to the spectrum is granted to the \ac{SU} transmitter would be a valuable step forward in the real implementation of interweave systems.

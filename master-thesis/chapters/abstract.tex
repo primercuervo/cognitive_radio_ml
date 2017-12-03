@@ -1,48 +1,14 @@
 \chapter*{Abstract}
 
-This thesis collects the fundamentals of machine learning and applies them in a determined, state-of-art, communications scenario.
-CEL thesis rules require it to be about 3-5 pages. \todo{This is a todo example}
-It is a summary of what you do in your thesis.
-Use around 5 pictures and outline whatever you did.
-And now a few lines of information.
+This thesis evaluates different machine learning techniques for effective spectrum awareness on \ac{CR} interweave systems. In the last decades, access to the electromagnetic spectrum has been granted to the highest bidder on \emph{spectrum auctions}. The auction winner is thereafter entitled to use a definite portion of the spectrum in a way which fits the best to the technology or service that he wants to provide. But, with increasing demand for this natural resource, it is imperative to find techniques that allow a more effective use of the spectrum, such as spectrum sharing.\\
 
+Spectrum sharing has been an ongoing topic of research in the last few years for the purpose of being part of the 5G communications systems, as well as for generally mitigating spectrum scarcity. The \ac{CEL} has actively worked on this issue with the use of \ac{SDR} and \ac{CR} devices. \ac{CR} devices have, conceptually, a \emph{learning stage} where they observe signals from the outer world in order to learn how to react accordingly, which consequently serves as a catalyst for the introduction of \ac{ML} to accomplish this purpose. Recently, \ac{CEL} has very successfully taken part in the \ac{DySpan} spectrum challenge competitions which deal specifically with this matter. In these competitions, a communication system with higher priority, also known as a \ac{PU}, is set to make use of a certain central frequency and \ac{BW} (divided into four channels) sending packets in a bursty fashion, randomizing the way it accesses the spectrum over ten different scenarios that vary its channel ocupation, frequency hopping pattern, packet length and inter-packet delay. The objective of these competitions is to implement a communication system with lesser priority, also known as a \ac{SU}, that identifies effectively the scenario that the \ac{PU} is using, and takes advantage of this information to access the spectrum in a way that interferes the least with the ongoing communication. This thesis uses the DySpan Spectrum Challenge setup as testbed and focuses on evaluating techniques used to identify the way the \ac{PU} is accessing the spectrum by the means of \ac{ML} and \ac{DL}.\\
 
-Polar codes are the first codes to asymptotically achieve channel capacity with low complexity encoders and decoders.
-They were first introduced by Erdal Arikan in 2009 \cite{Jondral2005}.
+Within the implementation of the challenge's testbed the specific scenario that the \ac{PU} uses for its transmission can be controlled, and this ability is used to record labeled samples over the specified bandwidth during a certain amount of time in order to generate a composite dataset, from which the scenarios that it uses are learned thenceforth using supervised learning. Additionally, the transmission power of the \ac{PU} is also varied in order to generate samples with different \ac{SNR}, to ensure that the \ac{ML} models learn how to classify under a diversity of signal power conditions. The learning methods are separated into two categories, based on the type of preprocessing that input data undergoes:
 
-Channel coding has always been a challenging task because it draws a lot of resources, especially in software implementations.
-Software Radio is getting more prominent because it offers several advantages among which are higher flexibility and better maintainability.
-Future radio systems are aimed at being run on virtualized servers instead of dedicated hardware in base stations \cite{Jondral2005}.
-%Future radio systems are aimed at being run on virtualized servers instead of dedicated hardware in base stations \cite{cloudran:2015}.
-Polar codes may be a promising candidate for future radio systems if they can be implemented efficiently in software.
+\paragraph*{Feature-based learning:} specific information is extracted from the recorded data as so-called \emph{features}, and then is used as an input into \ac{ML} algorithms. Then a benchmark between the K-nearest neighbors, decision trees, and \ac{SVM} is presented demostrating how well these algorithms are able to classify the correct scenario based on the extracted features. This method relies on a energy detection scheme to generate the features, which presents a limitation when the \ac{PU} is transmitting with low SNR.
+\paragraph*{Spectrogram-based learning:} data preprocessing here consist of generating spectrograms that are fed into convolutional neural networks for them to be classified using image recognition techniques. Different optimizers, such as the stochastic gradient descent, adamax, and adadelta, are used to achieve an understanding of their convergence speed as well as their accuracy. This method is independent of the \ac{PU} SNR, as the spectrograms are generated directly from the input data regardless of its spectral content.\\
 
-In this thesis the theory behind polar codes and a polar code implementation in GNU Radio is presented.
-This implementation is then evaluated regarding parameterization options and their impact on error correction performance.
-The evaluation includes a comparison to state-of-the-art \ac{LDPC} codes.
+The performance of these methods is analyzed with respect to their accuracy on classification over the test dataset, along with the time they take to classify a data sample. These parameters serve as figures of merit to determine how viable it is to use these algorithms in real-time applications. Lastly, a demonstration of the performance of the regarded classification models is presented using GNU Radio, where the \ac{PU} scenarios are classified in real-time. This work shows that with a relatively little amount of data confident spectrum awareness can be achieved using learning techniques, without the need of pinning down a specific analytical description of the way the spectrum is being utilized by other actors in a communication system.\\
 
-
-\begin{figure}[!htb]
-  \begin{subfigure}[t]{.49\textwidth}
-    \begin{center}
-      \def\dist{1.5}
-      \def\power{3}
-      \input{figures/polar_nbit_encoder_natural}
-      \caption{8 bit polar encoder}
-      \label{abs:polar_8bit_encoder_natural}
-    \end{center}
-  \end{subfigure}\,%
-  \begin{subfigure}[t]{.49\textwidth}
-    \begin{center}
-      \def\dist{1.5}
-      \def\power{3}
-      \input{figures/polar_nbit_decoder}
-      \caption{8 bit polar decoder}
-      \label{abs:polar_8bit_decoder}
-    \end{center}
-  \end{subfigure}%
-  \caption{Polar code encoding and decoding}
-  \label{abs:encoder-decoder}
-\end{figure}
-
-The polar encoder is shown in Fig. \ref{abs:polar_8bit_encoder_natural}.
-
+This thesis culminates in a conclusion on the feasibility of using the analyzed \ac{ML} algorithms in real-time scenarios. Based on the results achieved, it can be confidently affirmed that decision trees provide the best trade off between accuracy and prediction time for this specific use case for feature-based classification. On the counterpart, \ac{SVM} do not provide satisfactory results, having a about 10\% less accuracy than the other two analyzed models while taking about 2500 times longer to provide a prediction than decision tree classifiers, and about 50 times longer than K-nearest neighbors classifier prediction, making them unsuitable for this application. Furthermore, it is found that image classification using a convolutional neural network with the adadelta optimizer provides a reliable classifier with as little as 300 iterations of training, which makes the spectrogram-based learning appealing over the feature-based learning as it does not depend on the \ac{PU} signal power to provide a prediction.
