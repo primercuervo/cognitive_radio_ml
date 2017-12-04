@@ -58,10 +58,14 @@
 \setcounter{secnumdepth}{4}
 
 %%% DEFINITIONS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 %% pretty C++ print.
 \def\CC{{C\nolinebreak[4]\hspace{-.05em}\raisebox{.4ex}{\tiny\textbf{++}}}}
 
 \begin{document}
+\makeatletter
+    \setlength\@fptop{0\p@}
+\makeatother
 \pagenumbering{roman}  % all the preliminaries should be counted roman style
 \maketitle
 %% preliminaries

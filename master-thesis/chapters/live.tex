@@ -8,7 +8,7 @@ The selection of the saved models is crucial for the good performance of the app
 \begin{itemize}
     \item K-nearest neighbors with 4 neighbors, trained with the whole (XL) unscaled dataset.
     \item A Decision tree with a tree depth=50, trained with the whole (XL) scaled dataset using a standard scaler.
-    \item \ac{SVM} with an RBF complexity of 1e6, trained with the small (S) scaled dataset using a standard scaler.
+    \item \ac{SVM} with an RBF complexity of \(\gamma=2^3\), trained with the medium (M) scaled dataset using a standard scaler.
 \end{itemize}
 
 For the spectrogram-based learning, an interesting technique is used for choosing the best fit for the real-time implementation. Keras provides routines for saving the model after the total of iterations is done, where one can assume that the model, after extensive training, will have an improving performance with increasing iteration number. However, a long training time can lead to overfitting of the model as seen at the end of section~\ref{ch:image_classification}. Two alternatives to avoid this are provided based on a constant callback of the accuracy and loss parameters. These alternatives are:

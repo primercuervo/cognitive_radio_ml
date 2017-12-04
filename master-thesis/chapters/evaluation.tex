@@ -15,12 +15,18 @@ The dataset is, then, sliced into four different sizes:
     \item Extra Large dataset (XL): the whole set of features extracted as recorded from the signals over the air.
 \end{itemize}
 
-Furthermore, a benchmark of the learning algorithms is made based on variations in their complexities. Each algorithm has different ways to represent its own complexity, and this has a significant impact on its overall performance. The \ac{ML} algorithms used in this analysis are K-nearest neighbors, \ac{SVM} and binary tree classification. Their complexities are set as follows:
+Furthermore, a benchmark of the learning algorithms is made based on variations on their complexities. Each algorithm has different ways to represent its own complexity, and this has a significant impact on its overall performance. The \ac{ML} algorithms used in this analysis are K-nearest neighbors, \ac{SVM} and binary tree classification. Their complexities are set as follows:
 
 \begin{itemize}
-    \item K-nearest neighbors: the complexity of this algorithm is set by the amount of neighbors that are considered in order to make a classification decision. For the benchmark, different models were trained using 2, 4, 10 and 50 neighbors.
-    \item \ac{SVM}: this algorithm allows the designer to select the type of kernel that is used during the learning process. The function of the kernel is to generate internally non-linear transformations over the input data while still behaving as a linear classificator. For this work, the \ac{RBF} is used as a kernel because of its known good performance on multiclass classification problems at the cost of longer training times. The complexity of this model is then set by providing different values to the 'C' parameter of this \ac{RBF} kernel. This parameter sets the trade off between the proneness of the model to result in an erroneous classification and the simplicity of the decision boundary. For this work, values of C=(1, 1000, 1000000) are given.\todo{changed to gamma, fix accordingly}
-    \item Decision Trees: in this model, the complexity is ruled by the depth of the decision branch. Here, depths of 2, 5, 10 and 50 are given.
+    \item K-nearest neighbors: the complexity of this algorithm is set by the amount of neighbors that are considered in order to make a classification decision. For the benchmark, different models were trained using from 1 neighbor up to 200 neighbors
+    \item \ac{SVM}: this algorithm allows the designer to select the type of kernel that is used during the learning process. The function of the kernel is to generate internally non-linear transformations over the input data while still behaving as a linear classificator. For this work, the \ac{RBF} is used as a kernel because of its known good performance on multiclass classification problems at the cost of longer training times. The complexity of this model is then set by providing different values to the '\(\gamma\)' parameter of this \ac{RBF} kernel, whose kernel function is:
+        \begin{equation}
+            \text{exp}(-\gamma || x - x'||^2
+        \end{equation}
+        For this work, values of \(\gamma=2^{-15}, 2^{-13}, 2^{-11}, 2^{-9}, 2^{-7}, 2^{-5}, 2^{-3}, 2^{-1}, 2^{1} \text{ and }2^{3} \) are used.
+
+
+    \item Decision Trees: in this model, the complexity is ruled by the depth of the decision branch. Here, depths from 1 up to 500 are used.
 \end{itemize}
 
 Moreover, it is also interesting to determine how the models behave when the features have been scaled. A first glance at the impact of a scaler is presented by using the StandardScaler() from SKlearn, which simply removes the mean of the features and scales them to unit variance. A side-by-side comparison of model performance when trained with unscaled features vs.scaled features is shown as a result of the benchmark. The results are depicted in Figs~\ref{fig:knn}, \ref{fig:dtc} and \ref{fig:svc}.
@@ -58,7 +64,6 @@ Moreover, it is also interesting to determine how the models behave when the fea
                 \addplot[color=red] table [x=N, y=M, col sep=comma, mark=none] {data/knn_accs_scaled.csv};
                 \addplot[color=green] table [x=N, y=L, col sep=comma, mark=none] {data/knn_accs_scaled.csv};
                 \addplot[color=orange] table [x=N, y=XL, col sep=comma, mark=none] {data/knn_accs_scaled.csv};
-                \legend{Dataset S, Dataset M, Dataset L, Dataset XL}
         \end{axis}
         \end{tikzpicture}
         \caption{Accuracy with scaled features}
@@ -132,7 +137,7 @@ Moreover, it is also interesting to determine how the models behave when the fea
         \caption{Prediction times with scaled features}
         \label{fig:knn_pred_times}
     \end{subfigure}
-    \caption{Metrics for KNN}
+    \caption{Metrics for K-Nearest Neighbors}
     \label{fig:knn}
 \end{figure}
 
@@ -169,7 +174,6 @@ Moreover, it is also interesting to determine how the models behave when the fea
                 \addplot[color=red] table [x=N, y=M, col sep=comma, mark=none] {data/dtc_accs_scaled.csv};
                 \addplot[color=green] table [x=N, y=L, col sep=comma, mark=none] {data/dtc_accs_scaled.csv};
                 \addplot[color=orange] table [x=N, y=XL, col sep=comma, mark=none] {data/dtc_accs_scaled.csv};
-                \legend{Dataset S, Dataset M, Dataset L, Dataset XL}
         \end{axis}
         \end{tikzpicture}
         \caption{Accuracy with scaled features}
@@ -282,7 +286,6 @@ Moreover, it is also interesting to determine how the models behave when the fea
                 \addplot[color=red] table [x=N, y=M, col sep=comma, mark=none] {data/svc_accs_scaled.csv};
                 \addplot[color=green] table [x=N, y=L, col sep=comma, mark=none] {data/svc_accs_scaled.csv};
                 \addplot[color=orange] table [x=N, y=XL, col sep=comma, mark=none] {data/svc_accs_scaled.csv};
-                \legend{Dataset S, Dataset M, Dataset L, Dataset XL}
         \end{axis}
         \end{tikzpicture}
         \caption{Accuracy with scaled features}
@@ -488,10 +491,10 @@ Moreover, it is also interesting to determine how the models behave when the fea
     %\label{fig:svc}
 %\end{figure}
 
-From Figs~\ref{fig:knn}, \ref{fig:dtc} and \ref{fig:svc} a couple of conclusions can be extracted. First, it is seen that the accuracy of the model increases as more data is taken into consideration, which is well according to the theory and serves as a queue for applying the same implementation with more data as proposed in chapter~\ref{ch:conclusions}. Furthermore, three different behaviors are appreciated:
+From Figs~\ref{fig:knn}, \ref{fig:dtc} and \ref{fig:svc} a couple of conclusions can be extracted. First, it is seen that the accuracy of the model increases as more data is taken into consideration, which is well according to the theory and serves as a catalyst for applying the same implementation with more data as proposed in chapter~\ref{ch:conclusions}. Furthermore, three different behaviors are appreciated:
 
 \begin{itemize}
-    \item As complexity increases, the K-nearest neighbors algorithm shows a decrease on its overall accuracy, which is an indication that the model is over-generalizing, and suggests that with such a complexity (50 neighbors, in this case), the model is starting to loosely classify scenarios, allowing more samples to be misclassified, and is set to perform badly if unknown samples are feed to it, as its capabilities for generalization are in decay. Moreover, the prediction times for the highest level of complexity are already about two times greater than the second highest, making it not suitable for live implementations. Furthermore, this model shows both a reduction in accuracy and an increase on prediction time when the features have been scaled, which simply states that the model performs well without further data preprocessing right after the feature extraction.
+    \item As complexity increases, the K-nearest neighbors algorithm shows a decrease on its overall accuracy, which is an indication that the model is over-generalizing, and suggests that with such a complexity (above few neighbors), the model is starting to loosely classify scenarios, allowing more samples to be misclassified, and is set to perform badly if unknown samples are feed to it, as its capabilities for generalization are in decay. Moreover, the prediction times for the highest level of complexity are already about two times greater than the second highest, making high K-nearest neighbors complexity not suitable for live implementations. Furthermore, this model shows both a reduction in accuracy and an increase on prediction time when the features have been scaled, which simply states that the model performs well without further data preprocessing right after the feature extraction.
     \item The decision tree model shows a steady increase on its accuracy as complexity increases, without reaching a clear overfitting state. Complexity has a clear effect on the training times, but it is still in the range of the milliseconds - being a process done only once, this does not affect dramatically the model selection and does not close the possibility of increasing the complexity for this specific use case. This can also be backed by the fact that the prediction times seem to stay constant with this increase. Interestingly, not only the training times are reduced after scaling, but also the prediction times are drastically improved, reaching about 10x faster predictions using the standard scaler. With comparable accuracy, scaling the features seems like a prospect procedure when this model is used in time demanding or live implementations.
         The low accuracy of this model when a depth=2 does not come as a surprise. As the classification is done based on \emph{if-then} steps, having such a short depth can only provide four possible predicted values, as it can be seen in the extracted tree shown in Fig~\ref{fig:dt_2}. This model is generated as an experimental exercise to show this behavior, and to make the statement that the depth of the tree has to be able to generate at least as many answers as classes of the problem, which in this specific use case is achieved with a depth=\(2^4 > 10\). Graphical representations of complex decision trees are easily generated, but they become overwhelming for them to be shown in this print. The procedure to generate these trees is explained in the development notebook of this thesis \cite{repo:cognitive_radio_ml}.
 
@@ -502,11 +505,11 @@ From Figs~\ref{fig:knn}, \ref{fig:dtc} and \ref{fig:svc} a couple of conclusions
       \label{fig:dt_2}
 \end{figure}
 
-    \item the \ac{SVM} do not show a clear tendency to improve as complexity is increased, and just like the K-nearest neighbor models, performs quite well in small sizes of datasets. However, the best accuracy of this model is still below the accuracies of the other models regarded in this benchmark. Additionally, the training and prediction times exceed dramatically the times achieved with the other models, being about 8000 times longer for training and around 500 times longer for prediction. The fact that this model is that slow will definitely affect considerably the performance of real-time implementations, an aspect that is crucial in systems such as cognitive radio.
+    \item the \ac{SVM} show a clear tendency to improve as complexity is increased only if the data has been scaled, which indicates the sensitivity of this model to unscaled data.  However, the best accuracy of this model is still below the accuracies of the other models regarded in this benchmark. Additionally, the training and prediction times exceed dramatically the times achieved with the other models, being about 8000 times longer for training and around 500 times longer for prediction. The fact that this model is that slow will definitely affect considerably the performance of real-time implementations, an aspect that is crucial in systems such as cognitive radio, and therefore would not be recommended for that type of implementations.
 \end{itemize}
 
 \section{Scenario Classification}
-Besides of the general performance that the learning models have in regard to the whole testing set, it is paramount to determine how good they perform by classifying each of the specific scenarios of Table~\ref{table:scenarios}. To assess this, confusion matrices are used to determine the number of rightfully classified scenarios, along with the false positives and false negatives. On this analysis, it is only of interest the number of correctly classified scenarios, and any misclassification affects the implementation equally, regardless of its type. Moreover, in section~\ref{ch:performance} can be seen that each algorithm behaves differently in terms not only of accuracy, but also in training time and prediction time. As the models are trained only once, the "training time" does not play a role in the model selection for this work, as it does not have any repercussion on the performance of the model when new values are applied to it. Therefore, "prediction time" and "accuracy" are metrics of quality that are considered for these models on its selection to be applied on real-time scenarios.\\
+Besides of the general performance that the learning models have in regard to the whole testing set, it is paramount to determine how good they perform by classifying each of the specific scenarios of Table~\ref{table:scenarios}. To assess this, confusion matrices are used to determine the number of correctly classified scenarios, along with the false positives and false negatives. On this analysis, it is only of interest the number of correctly classified scenarios, and any misclassification affects the implementation equally, regardless of its type. Moreover, in section~\ref{ch:performance} can be seen that each algorithm behaves differently in terms not only of accuracy, but also in training time and prediction time. As the models are trained only once, the "training time" does not play a role in the model selection for this work, as it does not have any repercussion on the performance of the model when new values are applied to it. Therefore, "prediction time" and "accuracy" are metrics of quality that are considered for these models on its selection to be applied on real-time scenarios.\\
 
 Confusion matrices show how each of the samples from the data set are classified for a given model. As a matter of illustration, a side by side comparison for the worst-performing vs. the best-performing model, with respect to accuracy, is given in Fig~\ref{fig:confusionknn}, \ref{fig:confusiondtc} and \ref{fig:confusionsvc}. The complete set of confusion matrices, corresponding to every trained model, can be found in the development notebook for this work \cite{repo:cognitive_radio_ml}.
 
@@ -554,13 +557,13 @@ Confusion matrices show how each of the samples from the data set are classified
     \begin{subfigure}[htb]{0.49\textwidth}
         \centering
         \includegraphics[width=\linewidth]{figures/svc_scaled_S_1}
-        \caption{\ac{SVM}, StandardScaled, C=1, trained with small (S) dataset}
+        \caption{\ac{SVM}, StandardScaled, \(\gamma=2^{-9}\), trained with small (S) dataset}
         \label{fig:knn_2}
     \end{subfigure}
     \begin{subfigure}[htb]{0.49\textwidth}
         \centering
         \includegraphics[width=\linewidth]{figures/svc_scaled_S_1e6}
-        \caption{\ac{SVM}, StandardScaled, C=1e6, trained with small (S) dataset}
+        \caption{\ac{SVM}, StandardScaled, \(\gamma=2^3\), trained with small (S) dataset}
         \label{fig:knn_4}
     \end{subfigure}
     \caption{Confusion Matrixes for \ac{SVM} Models}
@@ -568,9 +571,9 @@ Confusion matrices show how each of the samples from the data set are classified
 \end{figure}
 It is also important to notice the clear difference on the number of samples present for each scenario. This is due to the fact that the measurements performed in section~\ref{ch:measure} were based on runtime and not on number of generated samples, and the feature extraction algorithm described in section~\ref{ch:features} generates a different number of samples for each scenario, because of its dependence on the \emph{frame events} generation consequently of the channel occupation and interframe time of arrival itself. A different approach for feature extraction based on a number of features generated is proposed in chapter~\ref{ch:conclusions}.
 
-From these matrices it can be clearly seen, at a first glance, that the K-Nearest algorithm performs quite well regardless of its configuration, having a more populated diagonal in its confusion matrix in comparison with the other two analyzed models. Additionally, just a small improvement in the classification accuracy is seen as the complexity and dataset size increases for this model. In general, it is safe to assert that the classification performs generally well for most of the scenarios except scenario 5, where a higher number of false positives, as well as false negatives, is seen for all models, being misclassified as scenario 9. This indicates that the extracted features for these specific scenarios have a noticeable correlation, and serve as an invitation to determine a feature that confidently sets a difference between them.
+From these matrices it can be clearly seen, at a first glance, that the K-Nearest algorithm and the decision trees perform quite well regardless of its configuration, having a more populated diagonal in its confusion matrix in comparison with the \ac{SVM} models. Additionally, just a small improvement in the classification accuracy is seen as the complexity and dataset size increases for this model. In general, it is safe to assert that the classification performs generally well for most of the scenarios except scenario 5, where a higher number of false positives, as well as false negatives, is seen for all models, being misclassified as scenario 9. This indicates that the extracted features for these specific scenarios have a noticeable correlation, which is not utterly surprising given that these scenarios share the channel occupation and interframe delay, being different only in the distribution with which the interframe delay is set: deterministic for scenario 5 and stochastic, with Poisson distribution, for scenario 9. This serves as an invitation to determine a feature that confidently sets a difference between them.
 \subsection{Image Classification}\label{ch:image_classification}
-For the image classification part of this work, a sequential model based on the work of \cite{Paisana2017} was implemented. The basic structure of this model is shown in Fig~\ref{fig:cnn}. As it can be seen, the model is composed of the connection of different layers, each of them with n specific functionality.
+For the image classification part of this work, a sequential model based on the work of \cite{Paisana2017} was implemented. The basic structure of this model is shown in Fig~\ref{fig:cnn}. As it can be seen, the model is composed of the connection of different layers, each of them with an specific functionality:
 
 \begin{figure}[!htb]
     \centering
@@ -580,7 +583,7 @@ For the image classification part of this work, a sequential model based on the 
 \end{figure}
 
 \begin{itemize}
-    \item Convolution2D: this comprises a convolutional kernel. It convolves the input to produce tensors at its output. This is the backbone of the \ac{ConvNet}, as it is the responsible for learning. Here, 2-Dimensional convolutional blocks are applied, as it is convolving over the area of the input images.
+    \item Convolution2D: this comprises a convolutional kernel. It convolves the input to produce tensors at its output. This is the backbone of the \ac{ConvNet}, as it is the responsible for learning. Here, 2-Dimensional convolutional blocks of kernel size 2x2 are applied, as it is convolving over the area of the input images.
     \item MaxPool: this layer serves its purpose for dimension reduction, which is a form of downsampling. Briefly, it divides the input tensor into 2x2 non-overlapping squares and keeps the largest value present in each of these cells, effectively reducing the size of the representation, which in consequence reduces the number of parameters transitting the network. This has the effect of reducing the number of vector operations as well, making each layer of the network less processing-demandant. Additionally, as parameters are being dropped, this helps to avoid overfitting by disregarding eventual characteristics that are being "memorized". The principle of operation of such layers is shown in Fig~\ref{fig:maxpool}.
         \begin{figure}[!htb]
             \centering
@@ -612,7 +615,7 @@ For the image classification part of this work, a sequential model based on the 
         It can be easily understood that the dimension of the output from this softmax function is the number of labels to classify and that the value of each is the probability of the input sample to belong to that class. Consequently, the classification result is the \( \argmax \) of the function output.
 \end{itemize}
 
-The chosen layers and its disposition are strictly related to the input. In this case, the input picture has a 64x64 size, which describes then the height and width of the first layer. The depth is the number of filters that are used for each layer, and it is, to some extent, represented in the extension of the scale of Fig~\ref{fig:cnn}. 5 convolutional layers, with kernel dimensions 2x2, were used in this sequential model, with depths of 48, 128, 192, 192 and 128 filters correspondingly. At the end of the sequential model, 3 fully connected layers with depth 1024, 1024 and 10 were used. The sequence of dimension changes of the sequential model and the number of parameters considered in each of the stages of the classification problem is summarized in Table~\ref{table:convnet_summary}. The number of parameters is the number of trainable weights that each layer contains. For a convolutional layer, this is calculated as \( \text{\# parameters} = \text{(depth of input tensor)}\cdot\text{(depth output tensor)}\cdot\text{height}_{kernel}\cdot \text{width}_{kernel} + \text{(depth output tensor)} \). As an example, the calculation for the first layer gives:
+The chosen layers and its disposition are strictly related to the input. In this case, the input picture has a 64x64 size, which describes then the height and width of the first layer. The depth is the number of filters that are used for each layer, and it is, to some extent, represented in the extension of the scale of Fig~\ref{fig:cnn}. 5 convolutional layers, with kernel dimensions 2x2, were used in this sequential model, with depths of 48, 128, 192, 192 and 128 filters correspondingly. At the end of the sequential model, 3 fully connected layers with depth 1024, 1024 and 10 were used. The succession of dimension changes of the sequential model and the number of parameters considered in each of the stages of the classification problem is summarized in Table~\ref{table:convnet_summary}. The number of parameters is the number of trainable weights that each layer contains. For a convolutional layer, this is calculated as \( \text{\# parameters} = \text{(depth of input tensor)}\cdot\text{(depth output tensor)}\cdot\text{height}_{kernel}\cdot \text{width}_{kernel} + \text{(depth output tensor)} \). As an example, the calculation for the first layer gives:
 \begin{equation*}
     1 \cdot 48 \cdot 2 \cdot 2 + 48 = 240
 \end{equation*}
@@ -770,7 +773,7 @@ The validation of the models was performed based on the accuracy that these opti
     \label{fig:adadelta}
 \end{figure}
 
-From these plots, it can clearly be seen that SGD takes a greater number of iterations to reach its maximum accuracy as well as its minimum loss factor in comparison with Adamax and Adadelta. With respect to their comparative accuracies, it is not conclusive that one of the optimizers provide a better result. The maximum and final values of the accuracies of these models are shown in Table~\ref{table:convnet_accs}, whilst the minimum and final values for the loss factor are shown in Table~\ref{table:convnet_loss}.
+From these plots, it can clearly be seen that SGD takes a greater number of iterations to reach its maximum accuracy as well as its minimum loss factor in comparison with Adamax and Adadelta. With respect to their comparative accuracies, it is not conclusive that one of the optimizers provide a better result. The maximum and final values of the accuracies of these models are shown in Table~\ref{table:convnet_accs}, whilst the minimum and final values for the loss factor is shown in Table~\ref{table:convnet_loss}.
 
 \begin{table}[!ht]
   \centering

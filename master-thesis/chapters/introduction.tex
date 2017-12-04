@@ -37,11 +37,11 @@ the idea of the challenge was to achieve the maximum throughput between the prop
 
 \begin{itemize}
     \item Bandwidth and Carrier Frequency: Along the 10MHz of maximum \ac{BW} divided into four subchannels of 2.5MHz each, it needs to be detected if the \ac{PU} is using one, two or four channels for its transmission. Effectively, it is needed to determine which frequencies are being used (identify the frequency hopping pattern) and when are they being used.
-    \item Packed length: The \ac{PU} transmitter sends packets in a bursty fashion to the corresponding receiver using packets of 64B payload.
-    \item Inter-arrival time between packets: the time between a packet transmission might vary from a situation to another. These times could be deterministic for some scenarios, as well as stochastic for others following a Poisson distribution. Correctly identifying the interpacket time of the current situation, allows for effective opportunistic access to the spectrum.
+    \item Packet description: The \ac{PU} transmitter sends packets in a bursty fashion to the corresponding receiver using packets of 64B payload.
+    \item Inter-arrival time between packets: the time between a packet transmission might vary from a situation to another. These times could be deterministic for some scenarios, as well as stochastic for others following a Poisson distribution. Correctly identifying the interpacket time of the current situation allows for effective opportunistic access to the spectrum.
 \end{itemize}
 
-With these characteristics, a set of 10 different scenarios is built, whose parameters are depicted in Table~\ref{table:scenarios}.
+With these characteristics a set of 10 different scenarios is built, whose parameters are depicted in Table~\ref{table:scenarios}.
 
 \begin{table}[h!]
     \centering
